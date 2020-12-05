@@ -40,14 +40,53 @@ router.post("/nueva_tarea", async (req, res) => {
 });
 
 // API que devuelve todas las tareas
-router.get("/get_tareas", async (req, res, next) => {
+router.get("/ver_tareas", async (req, res, next) => {
   try {
-    tareas = await Tarea.find({idUsuario: 1});
+    tareas = await Tarea.find({ idUsuario: 1 });
 
     res.status(200).json({ tareas });
   } catch (error) {
     console.log("Error al consultar en Mongo: " + error);
   }
+});
+
+router.put("/actualizar_tarea", async (req, res) => {
+  const id = req.body.id;
+
+  const tarea = await Tarea.findById(id);
+
+  if (!tarea) {
+    res.status(404).json({
+      msg: "No existe la tarea",
+    });
+  }
+
+  const datos = req.body;
+
+  delete datos.estado;
+
+  const tareaActualizada = await Tarea.findByIdAndUpdate(id, datos, {
+    new: true,
+  });
+
+  res.status(200).json({ tarea: tareaActualizada });
+});
+
+
+router.delete("/eliminar_tarea", async (req, res) => {
+  const id = req.query.id;
+
+  const tarea = await Tarea.findById(id);
+
+  if (!tarea) {
+    res.status(404).json({
+      msg: "No existe la tarea",
+    });
+  }
+
+  await Tarea.findByIdAndDelete(id);
+
+  res.status(200).json({ msj: "Tarea eliminada" });
 });
 
 module.exports = router;
