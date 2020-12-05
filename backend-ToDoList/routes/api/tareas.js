@@ -25,4 +25,29 @@ try {
   console.log("Ocurrió un error al conectarse a la base de datos: " + error);
 }
 
+// API para agregar una nueva tarea
+router.post("/nueva_tarea", async (req, res) => {
+  try {
+    const tarea = new Tarea(req.body);
+    tarea.save();
+
+    res.status(200).json({
+      resultado: "Tarea agregada",
+    });
+  } catch (error) {
+    console.log("Error al insertar en Mongo: " + error);
+  }
+});
+
+// API que devuelve todas las tareas
+router.get("/get_tareas", async (req, res, next) => {
+  try {
+    tareas = await Tarea.find({idUsuario: 1});
+
+    res.status(200).json({ tareas });
+  } catch (error) {
+    console.log("Error al consultar en Mongo: " + error);
+  }
+});
+
 module.exports = router;
