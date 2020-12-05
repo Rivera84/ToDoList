@@ -50,6 +50,7 @@ router.get("/ver_tareas", async (req, res, next) => {
   }
 });
 
+// Endpoint para actualizar la información de una tarea
 router.put("/actualizar_tarea", async (req, res) => {
   const id = req.body.id;
 
@@ -72,7 +73,7 @@ router.put("/actualizar_tarea", async (req, res) => {
   res.status(200).json({ tarea: tareaActualizada });
 });
 
-
+// Endpoint para eliminar permanentemente una tarea
 router.delete("/eliminar_tarea", async (req, res) => {
   const id = req.query.id;
 
@@ -87,6 +88,46 @@ router.delete("/eliminar_tarea", async (req, res) => {
   await Tarea.findByIdAndDelete(id);
 
   res.status(200).json({ msj: "Tarea eliminada" });
+});
+
+// Endpoint para actualizar el estado de una tarea
+router.put("/cambiar_estado_tarea", async (req, res) => {
+  const id = req.body.id;
+
+  const tarea = await Tarea.findById(id);
+
+  if (!tarea) {
+    res.status(404).json({
+      msg: "No existe la tarea",
+    });
+  }
+
+  const estadoActual = req.body.estado;
+
+  if (estadoActual == "Pendiente") {
+    const estado = "Finalizada";
+    console.log(estado);
+    const tareaActualizada = await Tarea.findByIdAndUpdate(
+      id,
+      { estado: estado },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({ tarea: tareaActualizada });
+  } else if (estadoActual == "Finalizada") {
+    const estado = "Pendiente";
+    const tareaActualizada = await Tarea.findByIdAndUpdate(
+      id,
+      { estado: estado },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({ tarea: tareaActualizada });
+  }
 });
 
 module.exports = router;
