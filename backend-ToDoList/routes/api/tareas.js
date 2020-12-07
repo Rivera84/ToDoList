@@ -29,6 +29,7 @@ try {
 router.post("/nueva_tarea", async (req, res) => {
   try {
     const tarea = new Tarea(req.body);
+    tarea.estado = "Pendiente";
     tarea.save();
 
     res.status(200).json({
@@ -92,9 +93,10 @@ router.delete("/eliminar_tarea", async (req, res) => {
 
 // Endpoint para actualizar el estado de una tarea
 router.put("/cambiar_estado_tarea", async (req, res) => {
-  const id = req.body.id;
+  const id = req.body.id;  
+  const estadoActual = req.body.estado;  
 
-  const tarea = await Tarea.findById(id);
+  const tarea = await Tarea.findById(id);  
 
   if (!tarea) {
     res.status(404).json({
@@ -102,11 +104,9 @@ router.put("/cambiar_estado_tarea", async (req, res) => {
     });
   }
 
-  const estadoActual = req.body.estado;
 
   if (estadoActual == "Pendiente") {
-    const estado = "Finalizada";
-    console.log(estado);
+    const estado = "Finalizada";    
     const tareaActualizada = await Tarea.findByIdAndUpdate(
       id,
       { estado: estado },
@@ -127,6 +127,18 @@ router.put("/cambiar_estado_tarea", async (req, res) => {
     );
 
     res.status(200).json({ tarea: tareaActualizada });
+  }
+});
+
+// API que devuelve una sola tarea
+router.post("/encontrar_tarea", async (req, res, next) => {
+  id = req.body.id
+  try {
+    tarea = await Tarea.findById(id);
+
+    res.status(200).json( tarea );
+  } catch (error) {
+    console.log("Error al consultar en Mongo: " + error);
   }
 });
 

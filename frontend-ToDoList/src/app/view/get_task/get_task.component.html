@@ -4,31 +4,50 @@
       <div>
         <h2 class="ml-3 mt-4">Tareas Pendientes</h2>
 
-        <!--Targeta para tareas pendientes-->
-        <div class="task  mb-4"  *ngFor="let t of list_task">
-          <div class="task-title col-lg">
-            <div class="title row" >
-              <a class="ml-2" href="">{{t.titulo}}</a>
-              <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>
-            </div>
-            <div>
-
-            </div>
-          </div>
-
-          <div class="dropdown-divider"></div>
-          <!--Descripcion-->
-          <div class="task-description col-lg">
-            <div class="row">
-              <div class="col-lg-9 p-0 description">
-                <p class="ml-4">{{t.descripcion}}</p>
+        <!--Tarjeta para tareas pendientes-->
+        <div *ngFor="let t of list_task">
+          <div class="task  mb-4" *ngIf="t.estado == 'Pendiente'">
+            <div class="task-title col-lg">
+              <div class="title row titulo-tarea">
+                <a class="ml-2" href="">{{t.titulo}}</a>
+                <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>
+                <!-- Default dropright button -->
+                <div ngbDropdown class="nav-item" ngbDropdown display="dynamic" placement="bottom-right"
+                  class="btn-group">
+                  <button type="button" class="btn text-white p-1" tabindex="0" ngbDropdownToggle id="navbarDropdown3"
+                    role="button">
+                    <i class="fas fa-ellipsis-v text-dark px-2"></i>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                    <!-- Dropdown menu links -->
+                    <a ngbDropdownItem class="dropdown-item" data-toggle="modal" (click)="pasarDatosTarea(t)" data-target="#exampleModal"
+                      (click)="$event.preventDefault()"><i class="far fa-edit"></i> Editar</a>
+                    <a ngbDropdownItem class="dropdown-item" (click)="$event.preventDefault()" href=""><i
+                        class="far fa-trash-alt"></i> Eliminar</a>
+                  </div>
+                </div>
               </div>
+              <div>
 
-              <div class="state col-lg-3 text-center p-0">
-              <p>Estado: <i (click)="get_task()" class="fas fa-check-circle ml-1"></i></p>
               </div>
-
             </div>
+
+            <div class="dropdown-divider"></div>
+            <!--Descripcion-->
+            <div class="task-description col-lg">
+              <div class="row">
+                <div class="col-lg-9 p-0 description">
+                  <p class="ml-4">{{t.descripcion}}</p>
+                </div>
+
+                <div class="state col-lg-3 text-center p-0">
+                  <p>Estado: <i (click)="cambiar_estado_task(t)" class="far fa-circle ml-1"></i></p>
+                </div>
+
+              </div>
+            </div>
+
+
           </div>
 
         </div>
@@ -37,38 +56,95 @@
         <h2 class="ml-3 mt-4">Tareas Finalizadas</h2>
 
         <!--Targeta para tareas finalizadas-->
-        <div class="task  mb-4">
-          <div class="task-title col-lg">
-            <div class="title row">
-              <a class="ml-2" href=""> Titulo tarea</a>
-              <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>
-            </div>
-            <div>
+        <div *ngFor="let t of list_task">
+          <div class="task  mb-4" *ngIf="t.estado == 'Finalizada'">
+            <div class="task-title col-lg">
+              <div class="title row titulo-tarea">
+                <a class="ml-2" href="">{{t.titulo}}</a>
+                <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>
+                <!-- Default dropright button -->
+                <div ngbDropdown class="nav-item" ngbDropdown display="dynamic" placement="bottom-right"
+                  class="btn-group">
+                  <button type="button" class="btn text-white p-1" tabindex="0" ngbDropdownToggle id="navbarDropdown3"
+                    role="button">
+                    <i class="fas fa-ellipsis-v text-dark px-2"></i>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                    <!-- Dropdown menu links -->
+                    <a ngbDropdownItem class="dropdown-item" data-toggle="modal" (click)="pasarDatosTarea(t)" data-target="#exampleModal"
+                      (click)="$event.preventDefault()"><i class="far fa-edit"></i> Editar</a>
+                    <a ngbDropdownItem class="dropdown-item" (click)="$event.preventDefault()" href=""><i
+                        class="far fa-trash-alt"></i> Eliminar</a>
+                  </div>
+                </div>
+              </div>
+              <div>
 
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+            <!--Descripcion-->
+            <div class="task-description col-lg">
+              <div class="row">
+                <div class="col-lg-9 p-0 description">
+                  <p class="ml-4">{{t.descripcion}}</p>
+                </div>
+
+                <div class="state col-lg-3 text-center p-0">
+                  <p>Estado: <i (click)="cambiar_estado_task(t)" class="fas fa-check-circle ml-1"
+                      style="font-size: 1em;"></i></p>
+                </div>
+
+              </div>
             </div>
           </div>
 
-          <div class="dropdown-divider"></div>
-          <!--Descripcion-->
-          <div class="task-description col-lg">
-            <div class="row">
-              <div class="col-lg-10 p-0 description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non iste expedita aut, reiciendis laborum
-                  earum
-                </p>
-              </div>
 
-              <div class="state col-lg-2 text-center">
-                <p><input type="checkbox" class="form-check-input custom-cb m-0" id="exampleCheck1"></p>
-              </div>
-
-            </div>
-          </div>
 
         </div>
 
       </div>
 
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Actualizar Tarea</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!--Formulario del Modal-->
+            <form>
+              <div class="form-group">
+                <label for="formtasktitle">Nombre de la tarea</label>
+                <input [(ngModel)]="Task.titulo" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
+                  id="formtasktitle" placeholder="Ingrese el título de la tarea">
+              </div>
+              <div class="form-group">
+                <label for="formtaskdescription">Descripcion:</label>
+                <input [(ngModel)]="Task.descripcion" [ngModelOptions]="{standalone: true}" type="text"
+                  class="form-control" id="formtaskdescription" placeholder="Ingrese la descripción de la tarea">
+              </div>
+              <div class="form-group">
+                <label for="formtaskuser">Usuario:</label>
+                <input [(ngModel)]="Task.idUsuario" [ngModelOptions]="{standalone: true}" type="text"
+                  class="form-control" id="formtaskuser" placeholder="">
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button  type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="col-lg-5 p-0">

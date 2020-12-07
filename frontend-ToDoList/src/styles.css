@@ -29,3 +29,19 @@
     color: green;
     font-size: 25px;
   }
+  .task{
+    padding: 1%;
+    border-radius: 10px;
+  }
+  .menu-tarea{
+    display: flex;
+    flex-direction: column-reverse;
+    margin-left: 5px;
+  }
+  .titulo-tarea{
+    align-items: center;
+  }
+  #navbarDropdown3::after{
+    margin-left: 0;
+    content: none;
+  }

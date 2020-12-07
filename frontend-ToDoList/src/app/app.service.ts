@@ -17,4 +17,10 @@ import {HttpClient} from '@angular/common/http';
         insert_task(load):Observable<any>{
             return this.httpClient.post(this.endpoint + "/nueva_tarea", load, {responseType: "json"})
         }
+        cambiar_estado_task(load):Observable<any>{
+            return this.httpClient.put(this.endpoint + "/cambiar_estado_tarea", load, {responseType:"json"})
+        }
+        encontrar_tarea(load):Observable<any>{
+            return this.httpClient.post(this.endpoint + "/encontrar_tarea", load, {responseType:"json"})
+        }
     }

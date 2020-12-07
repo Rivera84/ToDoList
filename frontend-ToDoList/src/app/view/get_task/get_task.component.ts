@@ -45,4 +45,36 @@ export class GetTaskComponent {
       }
     )
   }
+  cambiar_estado_task(tarea) {
+    var response;
+    var load = {
+      id: tarea._id,
+      estado: tarea.estado
+    }
+
+    this.service.cambiar_estado_task(load).subscribe(
+      data => response = data,
+      err => {
+        console.log("ha ocurrido un error al cambiar el estado de la tarea " + err);
+      },
+      () => {
+        this.get_task();
+      }
+    )
+  }
+  pasarDatosTarea(tarea) {
+    var response;
+    var load = {
+      id: tarea._id,      
+    }
+    this.service.encontrar_tarea(load).subscribe(
+      data => response = data,
+      err => {
+        console.log("ha ocurrido un error al cambiar el estado de la tarea " + err);
+      },
+      () => {
+        this.Task = response;
+      }
+    )
+  }
 }
