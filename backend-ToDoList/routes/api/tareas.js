@@ -44,7 +44,7 @@ router.get("/ver_tareas", async (req, res, next) => {
   try {
     tareas = await Tarea.find({ idUsuario: 1 });
 
-    res.status(200).json({ tareas });
+    res.status(200).json( tareas );
   } catch (error) {
     console.log("Error al consultar en Mongo: " + error);
   }

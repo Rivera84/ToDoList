@@ -1,0 +1,82 @@
+<div class="col-lg">
+  <div class="row">
+    <div class="col-lg-7 p-0">
+      <div>
+        <h2 class="ml-3 mt-4">Tareas Pendientes</h2>
+
+        <!--Targeta para tareas pendientes-->
+        <div class="task  mb-4"  *ngFor="let t of list_task">
+          <div class="task-title col-lg">
+            <div class="title row" >
+              <a class="ml-2" href="">{{t.titulo}}</a>
+              <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>
+            </div>
+            <div>
+
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+          <!--Descripcion-->
+          <div class="task-description col-lg">
+            <div class="row">
+              <div class="col-lg-9 p-0 description">
+                <p class="ml-4">{{t.descripcion}}</p>
+              </div>
+
+              <div class="state col-lg-3 text-center p-0">
+              <p>Estado: <i (click)="get_task()" class="fas fa-check-circle ml-1"></i></p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+        <h2 class="ml-3 mt-4">Tareas Finalizadas</h2>
+
+        <!--Targeta para tareas finalizadas-->
+        <div class="task  mb-4">
+          <div class="task-title col-lg">
+            <div class="title row">
+              <a class="ml-2" href=""> Titulo tarea</a>
+              <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>
+            </div>
+            <div>
+
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+          <!--Descripcion-->
+          <div class="task-description col-lg">
+            <div class="row">
+              <div class="col-lg-10 p-0 description">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non iste expedita aut, reiciendis laborum
+                  earum
+                </p>
+              </div>
+
+              <div class="state col-lg-2 text-center">
+                <p><input type="checkbox" class="form-check-input custom-cb m-0" id="exampleCheck1"></p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-5 p-0">
+
+
+      Reloj
+      Calendario
+      (o lo que se nos ocurra xD)
+    </div>
+  </div>
+</div>
