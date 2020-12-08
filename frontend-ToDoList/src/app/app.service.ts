@@ -23,4 +23,7 @@ import {HttpClient} from '@angular/common/http';
         encontrar_tarea(load):Observable<any>{
             return this.httpClient.post(this.endpoint + "/encontrar_tarea", load, {responseType:"json"})
         }
+        eliminar_tarea(load):Observable<any>{
+            return this.httpClient.delete(this.endpoint + "/eliminar_tarea", {params: load, responseType:"json"})
+        }
     }

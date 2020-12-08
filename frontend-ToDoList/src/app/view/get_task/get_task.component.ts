@@ -39,9 +39,7 @@ export class GetTaskComponent {
         console.log("ha ocurrido un error al llamar el servicio" + err);
       },
       () => {
-        this.list_task = response;
-        console.log(this.list_task)
-        typeof (this.list_task);
+        this.list_task = response;        
       }
     )
   }
@@ -67,14 +65,30 @@ export class GetTaskComponent {
     var load = {
       id: tarea._id,      
     }
+    
     this.service.encontrar_tarea(load).subscribe(
       data => response = data,
       err => {
         console.log("ha ocurrido un error al cambiar el estado de la tarea " + err);
       },
       () => {
-        this.Task = response;
+        this.Task = response;              
       }
     )
+  }
+  eliminar_tarea(id){    
+      var response;
+      var load = {
+        id: id
+      }
+      this.service.eliminar_tarea(load).subscribe(
+          data => response = data,
+          err => {
+              console.log("Ocurrió un problema al eliminar el vehículo", err);
+          },
+          () => {
+              this.get_task();
+          }
+      )        
   }
 }

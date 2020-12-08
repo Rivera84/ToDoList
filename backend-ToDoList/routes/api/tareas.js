@@ -132,9 +132,9 @@ router.put("/cambiar_estado_tarea", async (req, res) => {
 
 // API que devuelve una sola tarea
 router.post("/encontrar_tarea", async (req, res, next) => {
-  id = req.body.id
+  id = req.body.id  
   try {
-    tarea = await Tarea.findById(id);
+    tarea = await Tarea.findById(id);    
 
     res.status(200).json( tarea );
   } catch (error) {
