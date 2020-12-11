@@ -5,11 +5,16 @@ var router = express.Router();
 // Importar libreria dotenv para manejar las variables de entorno de nuestro servidor
 require("dotenv").config({ path: "variables.env" });
 
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const secret_key = process.env.SECRET_KEY || "prew";
+
 // Importamos Mongoose para realizar la conexion con la BD
 const mongoose = require("mongoose");
 
 // Importamos el modelo de tareas para poderlo utilizar en la API
 const Tarea = require("../../models/tareas");
+const Usuario = require("../../models/usuarios");
 
 // Realizamos la conexión al cluster de MongoDB
 // ==== NOTA: Utilizaremos variables de entorno para evitar que la información confidencial
@@ -45,7 +50,7 @@ router.get("/ver_tareas", async (req, res, next) => {
   try {
     tareas = await Tarea.find({ idUsuario: 1 });
 
-    res.status(200).json( tareas );
+    res.status(200).json(tareas);
   } catch (error) {
     console.log("Error al consultar en Mongo: " + error);
   }
@@ -93,10 +98,10 @@ router.delete("/eliminar_tarea", async (req, res) => {
 
 // Endpoint para actualizar el estado de una tarea
 router.put("/cambiar_estado_tarea", async (req, res) => {
-  const id = req.body.id;  
-  const estadoActual = req.body.estado;  
+  const id = req.body.id;
+  const estadoActual = req.body.estado;
 
-  const tarea = await Tarea.findById(id);  
+  const tarea = await Tarea.findById(id);
 
   if (!tarea) {
     res.status(404).json({
@@ -104,9 +109,8 @@ router.put("/cambiar_estado_tarea", async (req, res) => {
     });
   }
 
-
   if (estadoActual == "Pendiente") {
-    const estado = "Finalizada";    
+    const estado = "Finalizada";
     const tareaActualizada = await Tarea.findByIdAndUpdate(
       id,
       { estado: estado },
@@ -132,14 +136,47 @@ router.put("/cambiar_estado_tarea", async (req, res) => {
 
 // API que devuelve una sola tarea
 router.post("/encontrar_tarea", async (req, res, next) => {
-  id = req.body.id  
+  id = req.body.id;
   try {
-    tarea = await Tarea.findById(id);    
+    tarea = await Tarea.findById(id);
 
-    res.status(200).json( tarea );
+    res.status(200).json(tarea);
   } catch (error) {
     console.log("Error al consultar en Mongo: " + error);
   }
 });
+
+//Agregar usuario
+router.post("/registrar_usuario", (req, res, next) => {
+  var user = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+
+  Usuario.count({ username: user.username }, function (err, count) {
+    if (count > 0) {
+      res.status(500).json({
+        msg: "Ya existe una persona registrada con ese usuario",
+      });
+    } else {
+      bcrypt.hash(user.password, 10).then((hashedPassword) => {
+        user.password = hashedPassword;
+        create_user(user);
+      });
+      const create_user = (user) => {
+        try {
+          console.log(user);
+          const usuario = new Usuario(user);
+          usuario.save();
+          res.status(200).send();
+        } catch (error) {
+          console.log("Error al insertar en Mongo: " + error);
+          res.status(500).send();
+        }
+      };
+    }
+  });
+});
+
 
 module.exports = router;
