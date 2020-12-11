@@ -10,11 +10,13 @@ import { AppService } from './app.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RelojComponent } from './view/reloj/reloj.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GetTaskComponent
+    GetTaskComponent,
+    RelojComponent
   ],
   imports: [
     BrowserModule,

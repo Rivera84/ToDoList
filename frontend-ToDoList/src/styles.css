@@ -45,3 +45,14 @@
     margin-left: 0;
     content: none;
   }
+
+  #reloj{
+    font-size: 40px;
+    font-weight: bold;
+    columns: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 5px dashed #333;
+    width: 30%;
+    padding:30px;
+    margin: 0px auto; 
+}
