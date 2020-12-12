@@ -1,13 +1,21 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
-import {GetTaskComponent} from './view/get_task/get_task.component'
+import { GetTaskComponent } from './view/get_task/get_task.component';
+import { EditTaskComponent } from './view/edit_task/edit_task.component';
 
-const routes: Routes = [{
-    path: 'user_task',
-    component: GetTaskComponent
-}];
+
+const routes: Routes = [
+    {
+        path: 'user_task',
+        component: GetTaskComponent
+    },
+    {
+        path: 'edit_task/:id',
+        component: EditTaskComponent
+    }
+];
 
 @NgModule({
     imports: [CommonModule, RouterModule.forRoot(routes)],
@@ -15,4 +23,4 @@ const routes: Routes = [{
     declarations: []
 })
 
-export class AppRoutingModule{}
+export class AppRoutingModule { }

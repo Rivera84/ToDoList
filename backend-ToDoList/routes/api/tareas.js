@@ -59,8 +59,11 @@ router.get("/ver_tareas", async (req, res, next) => {
 // Endpoint para actualizar la información de una tarea
 router.put("/actualizar_tarea", async (req, res) => {
   const id = req.body.id;
+  
 
   const tarea = await Tarea.findById(id);
+
+  console.log(tarea);
 
   if (!tarea) {
     res.status(404).json({
@@ -70,13 +73,19 @@ router.put("/actualizar_tarea", async (req, res) => {
 
   const datos = req.body;
 
-  delete datos.estado;
+  delete datos.estado;  
 
-  const tareaActualizada = await Tarea.findByIdAndUpdate(id, datos, {
-    new: true,
-  });
 
-  res.status(200).json({ tarea: tareaActualizada });
+  try {
+    const tareaActualizada = await Tarea.findByIdAndUpdate(id, datos, {
+      new: true,
+    });
+  
+    res.status(200).json({ tarea: tareaActualizada });
+  } catch (error) {
+    console.log("Error al actualizar en Mongo: " + error);
+  }
+ 
 });
 
 // Endpoint para eliminar permanentemente una tarea
@@ -153,9 +162,9 @@ router.post("/registrar_usuario", (req, res, next) => {
     password: req.body.password,
   };
 
-  Usuario.count({ username: user.username }, function (err, count) {
+  Usuario.countDocuments({ username: user.username }, function (err, count) {
     if (count > 0) {
-      res.status(500).json({
+      res.status(400).json({
         msg: "Ya existe una persona registrada con ese usuario",
       });
     } else {
@@ -178,5 +187,49 @@ router.post("/registrar_usuario", (req, res, next) => {
   });
 });
 
+// Inicio de sesión de usuario
+router.post("/iniciar_sesion", (req, res, next) => {
+  var user = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+  var contar = 0;
+  const get_token = (user) => {
+    
+    // Usuario.countDocuments({ username: user.username }, function (err, count) {
+    //   if (count > 0) {
+    //     return contar=1;
+        
+    //   } else {        
+    //     return contar = 0;
+    //   }
+      
+    // });
+
+    var ver = Usuario.where({username: user.username}).count() > 0 ? true : false;
+    console.log(ver);
+
+    if (Usuario.find({username: user.username}).count() > 0) {
+      const us = Usuario.findOne({ username: user.username });
+      console.log(us.username);
+
+      bcrypt.compare(user.password, us.password, (error, isMatch) => {
+        if (isMatch) {
+          var token = jwt.sign({ userId: us.id }, secret_key);
+          res.status(200).json({ token });
+        } else if (error) {
+          res.status(400).json(error);
+        } else {
+          res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
+        }
+      });
+    } else {
+      // console.log(err);
+      console.log(Usuario.find({username: user.username}).count());
+      res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
+    }
+  };
+  get_token(user);
+});
 
 module.exports = router;

@@ -23,11 +23,11 @@
                       </button>
                       <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
                         <!-- Dropdown menu links -->
-                        <a ngbDropdownItem class="dropdown-item" data-toggle="modal" (click)="pasarDatosTarea(t)"
-                          data-target="#exampleModal" (click)="$event.preventDefault()"><i class="far fa-edit"></i>
+                        <a ngbDropdownItem class="dropdown-item" [routerLink]="['/edit_task', t._id]"
+                          (click)="$event.preventDefault()"><i class="far fa-edit"></i>
                           Editar</a>
-                        <a ngbDropdownItem class="dropdown-item" (click)="eliminar_tarea(t._id)" (click)="$event.preventDefault()" href=""><i
-                            class="far fa-trash-alt"></i> Eliminar</a>
+                        <a ngbDropdownItem class="dropdown-item" (click)="eliminar_tarea(t._id)"
+                          (click)="$event.preventDefault()" href=""><i class="far fa-trash-alt"></i> Eliminar</a>
                       </div>
                     </div>
                   </div>
@@ -80,8 +80,8 @@
                       </button>
                       <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
                         <!-- Dropdown menu links -->
-                        <a ngbDropdownItem class="dropdown-item" data-toggle="modal" (click)="pasarDatosTarea(t)"
-                          data-target="#exampleModal" (click)="$event.preventDefault()"><i class="far fa-edit"></i>
+                        <a ngbDropdownItem class="dropdown-item" [routerLink]="['/edit_task', t._id]"
+                          (click)="$event.preventDefault()"><i class="far fa-edit"></i>
                           Editar</a>
                         <a ngbDropdownItem class="dropdown-item" (click)="$event.preventDefault()" href=""><i
                             class="far fa-trash-alt"></i> Eliminar</a>
@@ -120,51 +120,11 @@
 
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Actualizar Tarea</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!--Formulario del Modal-->
-            <form>
-              
-              <div class="form-group">
-                <label for="txtTitulo">Nombre de la tarea</label>                
-                <input [(ngModel)]="Task.titulo" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
-                  id="txtTitulo" [(ngModel)]="Task.titulo" placeholder="Ingrese el título de la tarea">
-              </div>
-              <div class="form-group">
-                <label for="txtDescripcion">Descripcion:</label>
-                <input [(ngModel)]="Task.descripcion" [ngModelOptions]="{standalone: true}" type="text"
-                  class="form-control" id="txtDescripcion" placeholder="Ingrese la descripción de la tarea">
-              </div>
-              <div class="form-group">
-                <label for="txtUsuario">Usuario:</label>
-                <input [(ngModel)]="Task.idUsuario" [ngModelOptions]="{standalone: true}" type="text"
-                  class="form-control" id="txtUsuario" placeholder="">
-              </div>
-            </form>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="col-lg-5 p-0 mt-5">
       <div class="col-lg">
-      <app-reloj></app-reloj>
-    </div>
-     
+        <app-reloj></app-reloj>
+      </div>
+
     </div>
   </div>
 </div>

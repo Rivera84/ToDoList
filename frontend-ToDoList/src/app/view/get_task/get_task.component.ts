@@ -5,6 +5,9 @@ import {
   AppService
 } from '../../app.service'
 
+import swal from 'sweetalert2';
+
+
 @Component({
   selector: 'get_task',
   templateUrl: './get_task.component.html'
@@ -39,7 +42,7 @@ export class GetTaskComponent {
         console.log("ha ocurrido un error al llamar el servicio" + err);
       },
       () => {
-        this.list_task = response;        
+        this.list_task = response;
       }
     )
   }
@@ -60,38 +63,37 @@ export class GetTaskComponent {
       }
     )
   }
-  pasarDatosTarea(tarea) {
+  eliminar_tarea(id) {
     var response;
     var load = {
-      id: tarea._id,      
+      id: id
     }
-    
-    this.service.encontrar_tarea(load).subscribe(
-      data => response = data,
-      err => {
-        console.log("ha ocurrido un error al cambiar el estado de la tarea " + err);
-      },
-      () => {
-        this.Task = response;              
-      }
-    )
-  }
-  eliminar_tarea(id){    
-      var response;
-      var load = {
-        id: id
-      }
-      this.service.eliminar_tarea(load).subscribe(
+    swal.fire({
+      title: '¿Está seguro que desea eliminar esta tarea?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      confirmButtonColor: '#c20a0a',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.service.eliminar_tarea(load).subscribe(
           data => response = data,
           err => {
-              console.log("Ocurrió un problema al eliminar el vehículo", err);
+            console.log("Ocurrió un problema al eliminar la tarea", err);
+            swal.fire('Ocurrió un problema al eliminar la tarea', '', 'error');
           },
           () => {
-              this.get_task();
+            swal.fire('¡Eliminado Correctamente!', '', 'success');
+            this.get_task();
           }
-      )        
+        )
+
+      } else if (result.isDenied) {
+        this.get_task();
+      }
+    });
+
   }
 
- 
-  
 }

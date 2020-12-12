@@ -26,4 +26,7 @@ import {HttpClient} from '@angular/common/http';
         eliminar_tarea(load):Observable<any>{
             return this.httpClient.delete(this.endpoint + "/eliminar_tarea", {params: load, responseType:"json"})
         }
+        update_tarea(load):Observable<any>{
+            return this.httpClient.put(this.endpoint + "/actualizar_tarea", load, {responseType:"json"})
+        }
     }
