@@ -15,6 +15,7 @@ const mongoose = require("mongoose");
 // Importamos el modelo de tareas para poderlo utilizar en la API
 const Tarea = require("../../models/tareas");
 const Usuario = require("../../models/usuarios");
+const { log } = require("debug");
 
 // Realizamos la conexión al cluster de MongoDB
 // ==== NOTA: Utilizaremos variables de entorno para evitar que la información confidencial
@@ -59,7 +60,6 @@ router.get("/ver_tareas", async (req, res, next) => {
 // Endpoint para actualizar la información de una tarea
 router.put("/actualizar_tarea", async (req, res) => {
   const id = req.body.id;
-  
 
   const tarea = await Tarea.findById(id);
 
@@ -73,19 +73,17 @@ router.put("/actualizar_tarea", async (req, res) => {
 
   const datos = req.body;
 
-  delete datos.estado;  
-
+  delete datos.estado;
 
   try {
     const tareaActualizada = await Tarea.findByIdAndUpdate(id, datos, {
       new: true,
     });
-  
+
     res.status(200).json({ tarea: tareaActualizada });
   } catch (error) {
     console.log("Error al actualizar en Mongo: " + error);
   }
- 
 });
 
 // Endpoint para eliminar permanentemente una tarea
@@ -188,48 +186,40 @@ router.post("/registrar_usuario", (req, res, next) => {
 });
 
 // Inicio de sesión de usuario
-router.post("/iniciar_sesion", (req, res, next) => {
+router.post("/iniciar_sesion", async (req, res, next) => {
   var user = {
-    username: req.body.username,
-    password: req.body.password,
+    usuar: req.body.username,
+    contra: req.body.password,
   };
-  var contar = 0;
-  const get_token = (user) => {
-    
-    // Usuario.countDocuments({ username: user.username }, function (err, count) {
-    //   if (count > 0) {
-    //     return contar=1;
-        
-    //   } else {        
-    //     return contar = 0;
-    //   }
-      
-    // });
 
-    var ver = Usuario.where({username: user.username}).count() > 0 ? true : false;
-    console.log(ver);
-
-    if (Usuario.find({username: user.username}).count() > 0) {
-      const us = Usuario.findOne({ username: user.username });
-      console.log(us.username);
-
-      bcrypt.compare(user.password, us.password, (error, isMatch) => {
-        if (isMatch) {
-          var token = jwt.sign({ userId: us.id }, secret_key);
-          res.status(200).json({ token });
-        } else if (error) {
-          res.status(400).json(error);
-        } else {
-          res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
-        }
-      });
-    } else {
-      // console.log(err);
-      console.log(Usuario.find({username: user.username}).count());
+  try {
+    VerificarUsuario = await Usuario.find({ username: user.usuar });
+    if (VerificarUsuario == "") {
       res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
+    } else {
+      console.log("hay");
+      console.log(VerificarUsuario[0].password);
+      bcrypt.compare(
+        user.contra,
+        VerificarUsuario[0].password,
+        (error, isMatch) => {
+          if (isMatch) {
+            var token = jwt.sign({ userId: VerificarUsuario[0]._id }, secret_key);
+            res.status(200).json({ token });
+          } else if (error) {
+            res.status(400).json(error);            
+          } else {
+            res
+              .status(400)
+              .json({ message: "Usuario o Contraseña Incorrectos" });            
+          }
+        }
+      );
     }
-  };
-  get_token(user);
+  } catch (error) {
+    res.status(500).json({message: "Ha ocurrido un error en el servidor"});
+    console.log("Ocurrió un error " + error);
+  }
 });
 
 module.exports = router;

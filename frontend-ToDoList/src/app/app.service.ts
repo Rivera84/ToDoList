@@ -29,4 +29,14 @@ import {HttpClient} from '@angular/common/http';
         update_tarea(load):Observable<any>{
             return this.httpClient.put(this.endpoint + "/actualizar_tarea", load, {responseType:"json"})
         }
+        iniciar_sesion(payload): Observable<any> {
+            return this.httpClient.post(this.endpoint + "/iniciar_sesion", payload, { responseType: 'json' });
+        }
+        set_session(token) {
+            localStorage.setItem("tarea", JSON.stringify(token));
+        }
+    
+        reset_session() {
+            localStorage.removeItem("tarea");
+        }
     }

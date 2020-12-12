@@ -1,15 +1,80 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgForm, FormControlDirective } from '@angular/forms';
+import swal from 'sweetalert2';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
   templateUrl: './iniciar_sesion.component.html',
   styleUrls: ['./iniciar_sesion.component.css']
 })
-export class IniciarSesionComponent implements OnInit {
+export class IniciarSesionComponent implements OnDestroy {
 
-  constructor() { }
+  @ViewChild('login_form') login_form: FormControlDirective;
+  public submitted = false;
+  public loading = false;
+  public login_data = {
+      username: "",
+      password: ""
+  }
 
-  ngOnInit(): void {
+  constructor(public service: AppService, private router: Router) {
+  }
+
+  ngOnDestroy() {
+  }
+
+  login() {
+      if (this.login_form.valid) {
+          this.submitted = false;
+          this.loading = true;
+          var response;
+          var load = {
+              username: this.login_data.username,
+              password: this.login_data.password
+          };
+          this.service.iniciar_sesion(load).subscribe(
+              data => response = data,
+              err => {
+                  if (err.status == 400) {
+                      swal.fire({
+                          title: 'Error de Autenticación,Las credenciales proporcionadas son incorrectas',
+                          icon: 'error'
+                      });
+                  } else {
+                      swal.fire({
+                          title: 'Error interno del servidor',
+                          icon: 'error'
+                      });
+                  }
+                  this.loading = false;
+              },
+              () => {
+                  try {
+                      if (response) {                          
+                          this.service.set_session(response);
+                          this.router.navigateByUrl('/user_task');
+                      } else {
+                          swal.fire({
+                              title: 'Error interno del servidor',
+                              icon: 'error'
+                          });
+                          this.loading = false;
+                      }
+                      this.loading = false;
+                  } catch (error) {
+                      swal.fire({
+                          title: 'Error interno del servidor',
+                          icon: 'error'
+                      });
+                      this.loading = false;
+                  }
+              }
+          );
+      } else {
+          this.submitted = true;
+      }
   }
 
 }
