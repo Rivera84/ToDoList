@@ -14,6 +14,7 @@ import { RelojComponent } from './view/reloj/reloj.component';
 import { EditTaskComponent } from './view/edit_task/edit_task.component';
 import { IniciarSesionComponent } from './view/iniciar_sesion/iniciar_sesion.component';
 import { RegistrarseComponent } from './view/registrarse/registrarse.component';
+import { NavbarComponent } from './view/navbar/navbar.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RegistrarseComponent } from './view/registrarse/registrarse.component';
     RelojComponent,
     EditTaskComponent,
     IniciarSesionComponent,
-    RegistrarseComponent
+    RegistrarseComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
