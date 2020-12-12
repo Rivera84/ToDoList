@@ -12,6 +12,8 @@ import {FormsModule} from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RelojComponent } from './view/reloj/reloj.component';
 import { EditTaskComponent } from './view/edit_task/edit_task.component';
+import { IniciarSesionComponent } from './view/iniciar_sesion/iniciar_sesion.component';
+import { RegistrarseComponent } from './view/registrarse/registrarse.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { EditTaskComponent } from './view/edit_task/edit_task.component';
     AppComponent,
     GetTaskComponent,
     RelojComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    IniciarSesionComponent,
+    RegistrarseComponent
   ],
   imports: [
     BrowserModule,
