@@ -8,7 +8,8 @@ const Schema = mongoose.Schema;
 const Usuario = new Schema({
     username: String,
     password: String,
-    email: String
+    email: String,
+    resetToken: String,
 });
 
 // Definimos el modelo de mongo con la estructura a utilizar

@@ -16,9 +16,10 @@ const mongoose = require("mongoose");
 const Tarea = require("../../models/tareas");
 const Usuario = require("../../models/usuarios");
 
+
 //Funcion para enviar correo
 
-function nodemailer(email_user){
+function nodemailer(email_user,subject_email, text_email){
 //Importar nodemailer
   const nodemailer = require("nodemailer");
   const trasporter = nodemailer.createTransport({
@@ -35,8 +36,8 @@ function nodemailer(email_user){
   const mailOptions = {
     from: "ToDoList",
     to: email_user,
-    subject: "Confirmar cuenta ToDoList",
-    text: "Holis"
+    subject: subject_email,
+    text: text_email
   };
 
   //Enviar correo
@@ -199,7 +200,11 @@ router.post("/registrar_usuario", (req, res, next) => {
         msg: "Ya existe una persona registrada con ese usuario",
       });
     } else {
-	    nodemailer(user.email);
+
+      const message = "Verificar cuenta";
+      const subjet = "Confirmar cuenta ToDoList";
+
+	    nodemailer(user.email,subjet, message);
       bcrypt.hash(user.password, 10).then((hashedPassword) => {
         user.password = hashedPassword;
         create_user(user);
@@ -253,5 +258,34 @@ router.post("/iniciar_sesion", async (req, res, next) => {
     console.log("Ocurrió un error " + error);
   }
 });
+
+
+//video https://www.youtube.com/watch?v=O49g_OVPe6Q
+router.put("/contrasena_olvidada", async (req, res, next) =>{
+  const user = req.body.user;
+  let verificationLink;
+
+  try{
+    VerificarUsuario = await Usuario.find({username: user});
+    if(VerificarUsuario = ""){
+      res.status(400).json({message: "El correo ha sido enviado"}); //Aunque el correo no se haya encontrado
+    }else{
+      const token = jwt.sign({username: user}, secret_key, {expiresIn: '10m'});
+      verificationLink = `http://localhost:4200/actualizar_contrasena/${token}`;
+      resetToken=token;
+
+      //TODO: enviar correo
+
+      try {
+        const datos = resetToken;
+      } catch (error) {
+        //TODO: guardar token
+      }
+    }
+  }catch{
+    res.status(400).json({message: "El correo ha sido enviado"}); //Aunque el correo no se haya encontrado
+  }
+})
+
 
 module.exports = router;

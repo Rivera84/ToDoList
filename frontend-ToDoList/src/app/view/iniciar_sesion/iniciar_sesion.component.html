@@ -19,11 +19,11 @@
                             <form #login_form="ngForm" class="login-form" action="#" method="post" role="form" style="display: block;">
                                 <div class="form-group">
                                     <label for="username">Ingrese su usuario</label>
-                                    <input #username="ngModel" [(ngModel)]="login_data.username" type="text" name="username"  tabindex="1" class="form-control" placeholder="Usuario" value="">
+                                    <input #username="ngModel" [(ngModel)]="login_data.username" type="text" name="username"  tabindex="1" class="form-control" required="true" placeholder="Usuario" value="">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Ingrese su contraseña</label>
-                                    <input #password="ngModel"  [(ngModel)]="login_data.password" type="password" name="password" tabindex="2" class="form-control" placeholder="Contraseña">
+                                    <input #password="ngModel"  [(ngModel)]="login_data.password" type="password" name="password" tabindex="2" class="form-control" required="true" placeholder="Contraseña">
                                 </div>
                                
                                 <div class="form-group">

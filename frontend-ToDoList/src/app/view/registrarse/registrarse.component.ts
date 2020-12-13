@@ -6,6 +6,7 @@ import {
   AppService
 } from '../../app.service'
 
+
 @Component({
   selector: 'app-registrarse',
   templateUrl: './registrarse.component.html',
@@ -20,7 +21,7 @@ export class RegistrarseComponent implements OnInit {
   public User = {
     username: "",
     password: "", 
-    email: ""
+    email: "",
   }
 
   insert_user() {
