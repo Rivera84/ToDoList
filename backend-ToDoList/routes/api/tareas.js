@@ -15,7 +15,6 @@ const mongoose = require("mongoose");
 // Importamos el modelo de tareas para poderlo utilizar en la API
 const Tarea = require("../../models/tareas");
 const Usuario = require("../../models/usuarios");
-const { log } = require("debug");
 
 //Funcion para enviar correo
 
@@ -191,6 +190,7 @@ router.post("/registrar_usuario", (req, res, next) => {
   var user = {
     username: req.body.username,
     password: req.body.password,
+    email: req.body.email
   };
 
   Usuario.countDocuments({ username: user.username }, function (err, count) {
@@ -199,7 +199,7 @@ router.post("/registrar_usuario", (req, res, next) => {
         msg: "Ya existe una persona registrada con ese usuario",
       });
     } else {
-	nodemailer(user.email);
+	    nodemailer(user.email);
       bcrypt.hash(user.password, 10).then((hashedPassword) => {
         user.password = hashedPassword;
         create_user(user);

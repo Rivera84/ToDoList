@@ -42,4 +42,7 @@ export class AppService {
         localStorage.removeItem("tarea");
         localStorage.removeItem("usuario");
     }
+    insert_user(load):Observable<any>{
+        return this.httpClient.post(this.endpoint + '/registrar_usuario', load, {responseType:'json'});
+    }
 }

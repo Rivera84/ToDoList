@@ -19,7 +19,8 @@ export class RegistrarseComponent implements OnInit {
 
   public User = {
     username: "",
-    password: ""
+    password: "", 
+    email: ""
   }
 
   insert_user() {
