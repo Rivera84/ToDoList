@@ -1,7 +1,7 @@
 
-<h2 class="title text-center" *ngIf="getHours()<=12">Hola, Buenos Dias</h2>
-<h2 class="title text-center" *ngIf="getHours()==12 && getHours()<=17">Hola, Buenos Tardes</h2>
-<h2 class="title text-center" *ngIf="getHours()==17 && getHours()<=24">Hola, Buenos Noches</h2>
+<h2 class="title text-center" *ngIf="getHours()>=0 && getHours()<=11">Hola, Buenos Dias</h2>
+<h2 class="title text-center" *ngIf="getHours()>=12 && getHours()<=17">Hola, Buenos Tardes</h2>
+<h2 class="title text-center" *ngIf="getHours()>=18 && getHours()<=24">Hola, Buenos Noches</h2>
 
 <div class="dummy-card">
   <div class="clock">
