@@ -10,11 +10,15 @@ import { AppService } from './app.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule } from '@angular/router';
+
 import { RelojComponent } from './view/reloj/reloj.component';
 import { EditTaskComponent } from './view/edit_task/edit_task.component';
 import { IniciarSesionComponent } from './view/iniciar_sesion/iniciar_sesion.component';
 import { RegistrarseComponent } from './view/registrarse/registrarse.component';
 import { NavbarComponent } from './view/navbar/navbar.component';
+import { DatosService } from './services/datos.service';
+import { UpdateTaskComponent } from './view/update-task/update-task.component';
 
 
 @NgModule({
@@ -25,16 +29,18 @@ import { NavbarComponent } from './view/navbar/navbar.component';
     EditTaskComponent,
     IniciarSesionComponent,
     RegistrarseComponent,
-    NavbarComponent
+    NavbarComponent,
+    UpdateTaskComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    RouterModule
   ],
-  providers: [AppService],
+  providers: [AppService, DatosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

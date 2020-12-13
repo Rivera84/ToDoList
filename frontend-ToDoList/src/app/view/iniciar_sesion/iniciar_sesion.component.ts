@@ -4,6 +4,7 @@ import { NgForm, FormControlDirective } from '@angular/forms';
 import swal from 'sweetalert2';
 import { AppService } from '../../app.service';
 import * as jQuery from 'jquery';
+import { DatosService } from 'src/app/services/datos.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -20,10 +21,13 @@ export class IniciarSesionComponent implements OnDestroy {
       password: ""
   }
 
-  constructor(public service: AppService, private router: Router) {
+  constructor(public service: AppService, private router: Router, private _datos: DatosService) {
   }
 
   ngOnInit(): void {
+    //   console.log(localStorage.getItem('tarea'));
+       
+      
     $(function() {
 
         $('#login-form-link').click(function(e) {
@@ -64,11 +68,13 @@ export class IniciarSesionComponent implements OnDestroy {
                           title: 'Error de Autenticación,Las credenciales proporcionadas son incorrectas',
                           icon: 'error'
                       });
+                    //   this._datos.logueado = false;
                   } else {
                       swal.fire({
                           title: 'Error interno del servidor',
                           icon: 'error'
                       });
+                    //   this._datos.logueado = false;
                   }
                   this.loading = false;
               },
@@ -76,12 +82,14 @@ export class IniciarSesionComponent implements OnDestroy {
                   try {
                       if (response) {                          
                           this.service.set_session(response);
-                          this.router.navigateByUrl('/user_task');
+                          this.router.navigateByUrl('/');
+                        //   this._datos.logueado = true;
                       } else {
                           swal.fire({
                               title: 'Error interno del servidor',
                               icon: 'error'
                           });
+                        //   this._datos.logueado = false;
                           this.loading = false;
                       }
                       this.loading = false;
@@ -90,6 +98,7 @@ export class IniciarSesionComponent implements OnDestroy {
                           title: 'Error interno del servidor',
                           icon: 'error'
                       });
+                    //   this._datos.logueado = false;
                       this.loading = false;
                   }
               }

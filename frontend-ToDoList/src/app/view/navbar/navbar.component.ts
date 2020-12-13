@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {
   AppService
 } from '../../app.service';
+import { Router } from '@angular/router';
+import { GetTaskComponent } from '../get_task/get_task.component';
+import swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +22,7 @@ export class NavbarComponent {
     idUsuario: ""
   }
 
-  constructor(public service: AppService) {
+  constructor(public service: AppService, private router: Router, public getTask: GetTaskComponent) {
     this.list_task = [];
   }
 
@@ -57,8 +61,18 @@ export class NavbarComponent {
       () => {
         this.limpiarDatos();
         this.get_task();
+        swal.fire('¡Agregado Correctamente!', '', 'success');
+        this.router.navigateByUrl('/');
+        this.getTask.get_task();
       }
     )
+    // this.router.navigateByUrl('/');
+
+  }
+
+  cerrar_sesion(){
+    this.service.reset_session();
+    this.router.navigateByUrl('/iniciar_sesion');
   }
 
 }

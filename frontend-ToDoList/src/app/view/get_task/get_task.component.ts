@@ -6,12 +6,14 @@ import {
 } from '../../app.service'
 
 import swal from 'sweetalert2';
-
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'get_task',
   templateUrl: './get_task.component.html'
 })
+
 
 export class GetTaskComponent {
   public list_task: any[];
@@ -24,7 +26,7 @@ export class GetTaskComponent {
   }
 
 
-  constructor(public service: AppService) {
+  constructor(public service: AppService, private router: Router) {
     this.list_task = []
   }
 
@@ -94,6 +96,5 @@ export class GetTaskComponent {
       }
     });
 
-  }
-
+  } 
 }

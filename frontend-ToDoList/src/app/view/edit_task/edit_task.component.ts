@@ -33,6 +33,8 @@ export class EditTaskComponent {
 
 
     ngOnInit(): void {
+        console.log('AQUI ESTOY');
+        
         this.get_task(this._route.snapshot.paramMap.get('id'));
     }
 
@@ -66,7 +68,7 @@ export class EditTaskComponent {
         this.service.update_tarea(load).subscribe(
             data => response = data,
             err => {
-                console.log("Ocurrió un problema al insertar el vehículo", err);
+                console.log("Ocurrió un problema al actualizar la tarea", err);
             },
             () => {
                 swal.fire({
@@ -74,7 +76,7 @@ export class EditTaskComponent {
                     icon: 'success',
                     confirmButtonText: 'Aceptar'                                            
                 }).then((result) => {
-                    this.router.navigateByUrl('/user_task');
+                    this.router.navigateByUrl('/');
                 });
             }
         )
