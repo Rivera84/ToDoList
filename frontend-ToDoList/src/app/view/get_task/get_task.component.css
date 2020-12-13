@@ -1,0 +1,3 @@
+.titulo::first-letter, .descripcion::first-letter{
+    text-transform: uppercase;
+}

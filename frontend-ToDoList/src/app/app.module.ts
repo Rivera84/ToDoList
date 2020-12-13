@@ -18,7 +18,8 @@ import { IniciarSesionComponent } from './view/iniciar_sesion/iniciar_sesion.com
 import { RegistrarseComponent } from './view/registrarse/registrarse.component';
 import { NavbarComponent } from './view/navbar/navbar.component';
 import { DatosService } from './services/datos.service';
-import { UpdateTaskComponent } from './view/update-task/update-task.component';
+import { NavActComponent } from './view/nav-act/nav-act.component';
+import { FooterComponent } from './view/footer/footer.component';
 
 
 @NgModule({
@@ -29,8 +30,8 @@ import { UpdateTaskComponent } from './view/update-task/update-task.component';
     EditTaskComponent,
     IniciarSesionComponent,
     RegistrarseComponent,
-    NavbarComponent,
-    UpdateTaskComponent,
+    NavbarComponent,    
+    NavActComponent, FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,8 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'get_task',
-  templateUrl: './get_task.component.html'
+  templateUrl: './get_task.component.html',
+  styleUrls: ['./get_task.component.css']
 })
 
 

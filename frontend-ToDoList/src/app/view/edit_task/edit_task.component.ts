@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 
 export class EditTaskComponent {
 
-    public Task = {
+    public Tarea = {
         titulo: "",
         descripcion: "",
         estado: "",
@@ -35,11 +35,11 @@ export class EditTaskComponent {
     ngOnInit(): void {
         console.log('AQUI ESTOY');
         
-        this.get_task(this._route.snapshot.paramMap.get('id'));
+        this.get_tarea(this._route.snapshot.paramMap.get('id'));
     }
 
 
-    get_task(id) {
+    get_tarea(id) {
         var response;
         var load = {
             id: id
@@ -50,7 +50,7 @@ export class EditTaskComponent {
                 console.log("ha ocurrido un error al llamar el servicio" + err);
             },
             () => {
-                this.Task = response;
+                this.Tarea = response;
             }
         )
     }

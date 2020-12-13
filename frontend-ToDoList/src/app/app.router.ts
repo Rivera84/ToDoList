@@ -9,14 +9,14 @@ import { RegistrarseComponent } from './view/registrarse/registrarse.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AppService } from './app.service';
 import { DatosService } from './services/datos.service';
-import { UpdateTaskComponent } from './view/update-task/update-task.component';
+import { NavbarComponent } from './view/navbar/navbar.component';
 
 
 const routes: Routes = [
     {
         path: '',
         component: GetTaskComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],                
     },
     {
         path: 'edit_task/:id',
@@ -30,12 +30,7 @@ const routes: Routes = [
     {
         path: 'registrarse',
         component: RegistrarseComponent
-    },
-    {
-        path: 'update_task/:id',
-        component: UpdateTaskComponent
-        // canActivate: [AuthGuard]
-    }
+    }    
 ];
 
 @NgModule({

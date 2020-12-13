@@ -61,9 +61,7 @@ router.get("/ver_tareas", async (req, res, next) => {
 router.put("/actualizar_tarea", async (req, res) => {
   const id = req.body.id;
 
-  const tarea = await Tarea.findById(id);
-
-  console.log(tarea);
+  const tarea = await Tarea.findById(id);  
 
   if (!tarea) {
     res.status(404).json({

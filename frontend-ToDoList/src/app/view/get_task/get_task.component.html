@@ -1,10 +1,10 @@
 <app-navbar></app-navbar>
 
-<div class="col-lg">
+<div class="col-lg mb-5">
   <div class="row">
     <div class="col-lg-7 p-0">
       <div *ngIf="list_task.length>0; else sinTareas">
-        <h2 class="ml-3 mt-4">Tareas Pendientes</h2>
+        <h3 class="ml-3 mt-4 mb-3">Tareas Pendientes</h3>
 
         <!--Tarjeta para tareas pendientes    <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>-->
         <div *ngFor="let t of list_task">
@@ -12,7 +12,7 @@
             <div class="task-title col-lg">
               <div class="title row titulo-tarea">
                 <div class="col-10">
-                  <a class="ml-2" href="">{{t.titulo}}</a>
+                  <h6 class="ml-2 my-2 titulo" >{{t.titulo}}</h6>
                 </div>
                 <div class="col-2">
                   <!-- Default dropright button -->
@@ -25,7 +25,7 @@
                       </button>
                       <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
                         <!-- Dropdown menu links -->
-                        <a ngbDropdownItem class="dropdown-item" [routerLink]="['/update_task', t._id]"><i
+                        <a ngbDropdownItem class="dropdown-item" [routerLink]="['/edit_task', t._id]"><i
                             class="far fa-edit"></i>
                           Editar</a>
                         <a ngbDropdownItem class="dropdown-item" (click)="eliminar_tarea(t._id)"
@@ -45,7 +45,7 @@
             <div class="task-description col-lg">
               <div class="row">
                 <div class="col-9 p-0 description">
-                  <p class="ml-4">{{t.descripcion}}</p>
+                  <p class="ml-4 descripcion">{{t.descripcion}}</p>
                 </div>
 
                 <div class="state col-3 text-center p-0">
@@ -61,15 +61,15 @@
         </div>
 
 
-        <h2 class="ml-3 mt-4">Tareas Finalizadas</h2>
+        <h3 class="ml-3 mt-4 mb-3">Tareas Finalizadas</h3>
 
-        <!--Targeta para tareas finalizadas-->
+        <!--Tarjeta para tareas finalizadas-->
         <div *ngFor="let t of list_task">
           <div class="task  mb-4" *ngIf="t.estado == 'Finalizada'">
             <div class="task-title col-lg">
               <div class="title row titulo-tarea">
                 <div class="col-10">
-                  <a class="ml-2" href="">{{t.titulo}}</a>
+                  <h6 class="ml-2 my-2 titulo">{{t.titulo}}</h6>
                 </div>
                 <div class="col-2">
                   <!-- Default dropright button -->
@@ -102,7 +102,7 @@
             <div class="task-description col-lg">
               <div class="row">
                 <div class="col-9 p-0 description">
-                  <p class="ml-4">{{t.descripcion}}</p>
+                  <p class="ml-4 descripcion">{{t.descripcion}}</p>
                 </div>
 
                 <div class="state col-3 text-center p-0">
@@ -125,8 +125,6 @@
       </ng-template>
     </div>
 
-
-
     <div class="col-lg-5 p-0 mt-5">
       <div class="col-lg">
         <app-reloj></app-reloj>
@@ -135,3 +133,4 @@
     </div>
   </div>
 </div>
+<app-footer></app-footer>
