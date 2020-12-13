@@ -9,7 +9,7 @@ const Tarea = new Schema({
     titulo: String,
     descripcion: String,
     estado: String,
-    idUsuario: String
+    usuario: String
 });
 
 // Definimos el modelo de mongo con la estructura a utilizar

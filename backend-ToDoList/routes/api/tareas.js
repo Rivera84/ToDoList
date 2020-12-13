@@ -49,7 +49,7 @@ router.post("/nueva_tarea", async (req, res) => {
 // API que devuelve todas las tareas
 router.get("/ver_tareas", async (req, res, next) => {
   try {
-    tareas = await Tarea.find({ idUsuario: 1 });
+    tareas = await Tarea.find({ usuario: req.query.usuario });
 
     res.status(200).json(tareas);
   } catch (error) {
@@ -197,8 +197,6 @@ router.post("/iniciar_sesion", async (req, res, next) => {
     if (VerificarUsuario == "") {
       res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
     } else {
-      console.log("hay");
-      console.log(VerificarUsuario[0].password);
       bcrypt.compare(
         user.contra,
         VerificarUsuario[0].password,

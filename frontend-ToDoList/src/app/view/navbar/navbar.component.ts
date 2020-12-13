@@ -22,8 +22,11 @@ export class NavbarComponent {
     idUsuario: ""
   }
 
+  public us = JSON.parse(localStorage.getItem("usuario")); 
+  
   constructor(public service: AppService, private router: Router, public getTask: GetTaskComponent) {
     this.list_task = [];
+     
   }
 
   limpiarDatos() {
@@ -38,7 +41,12 @@ export class NavbarComponent {
 
   get_task() {
     var response;
-    this.service.get_task().subscribe(
+
+    var us= JSON.parse(localStorage.getItem("usuario"));  
+    var load = {
+      usuario: us.user
+    }
+    this.service.get_task(load).subscribe(
       data => response = data,
       err => {
         console.log("ha ocurrido un error al llamar el servicio" + err);
@@ -53,7 +61,15 @@ export class NavbarComponent {
 
   post_task() {
     var respone;
-    this.service.insert_task(this.Task).subscribe(
+
+    var us= JSON.parse(localStorage.getItem("usuario"));    
+
+    var load = {
+      titulo: this.Task.titulo,
+      descripcion: this.Task.descripcion,
+      usuario: us.user
+    }
+    this.service.insert_task(load).subscribe(
       data => respone = data,
       err => {
         console.log("Ha ocurrido un error con la llamada del servicio");

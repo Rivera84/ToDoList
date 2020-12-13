@@ -82,6 +82,7 @@ export class IniciarSesionComponent implements OnDestroy {
                   try {
                       if (response) {                          
                           this.service.set_session(response);
+                          this.service.ver_usuario(load.username);
                           this.router.navigateByUrl('/');
                         //   this._datos.logueado = true;
                       } else {

@@ -10,8 +10,8 @@ export class AppService {
         this.endpoint = "http://" + window.location.hostname + ":3000/api";
     }
 
-    get_task(): Observable<any> {
-        return this.httpClient.get(this.endpoint + "/ver_tareas", { responseType: "json" })
+    get_task(load): Observable<any> {
+        return this.httpClient.get(this.endpoint + "/ver_tareas", {params: load, responseType: "json" })
     }
 
     insert_task(load): Observable<any> {
@@ -33,10 +33,13 @@ export class AppService {
         return this.httpClient.post(this.endpoint + "/iniciar_sesion", payload, { responseType: 'json' });
     }
     set_session(token) {
-        localStorage.setItem("tarea", JSON.stringify(token));
+        localStorage.setItem("tarea", JSON.stringify({token}));
     }
-
+    ver_usuario(user) {
+        localStorage.setItem("usuario", JSON.stringify({user}));        
+    }
     reset_session() {
         localStorage.removeItem("tarea");
+        localStorage.removeItem("usuario");
     }
 }

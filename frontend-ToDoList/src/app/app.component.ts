@@ -38,7 +38,11 @@ export class AppComponent {
 
   get_task() {
     var response;
-    this.service.get_task().subscribe(
+    var us= JSON.parse(localStorage.getItem("usuario")); 
+    var load = {
+      usuario: us.user
+    }
+    this.service.get_task(load).subscribe(
       data => response = data,
       err => {
         console.log("ha ocurrido un error al llamar el servicio" + err);
