@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  AppService
+} from '../../app.service'
 
 @Component({
   selector: 'app-registrarse',
@@ -7,9 +13,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrarseComponent implements OnInit {
 
-  constructor() { }
+  constructor(public servive: AppService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  public User = {
+    username: "",
+    password: ""
+  }
+
+  insert_user() {
+    var response;
+    this.servive.insert_user(this.User).subscribe(
+      data => response = data,
+      err => {
+        console.log("Ha ocurrido un error al llamar el servicio");
+      },
+      () => {
+        console.log("Usuario insertado")
+      }
+    )
   }
 
 }

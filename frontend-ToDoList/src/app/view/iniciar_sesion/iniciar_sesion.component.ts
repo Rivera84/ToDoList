@@ -4,7 +4,6 @@ import { NgForm, FormControlDirective } from '@angular/forms';
 import swal from 'sweetalert2';
 import { AppService } from '../../app.service';
 import * as jQuery from 'jquery';
-import { DatosService } from 'src/app/services/datos.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -21,24 +20,21 @@ export class IniciarSesionComponent implements OnDestroy {
       password: ""
   }
 
-  constructor(public service: AppService, private router: Router, private _datos: DatosService) {
+  constructor(public service: AppService, private router: Router) {
   }
 
   ngOnInit(): void {
-    //   console.log(localStorage.getItem('tarea'));
-       
-      
     $(function() {
 
         $('#login-form-link').click(function(e) {
             $(".login-form").delay(100).fadeIn(100);
-             $("#register-form").fadeOut(100);
+             $(".register-form").fadeOut(100);
             $('#register-form-link').removeClass('active');
             $(this).addClass('active');
             e.preventDefault();
         });
         $('#register-form-link').click(function(e) {
-            $("#register-form").delay(100).fadeIn(100);
+            $(".register-form").delay(100).fadeIn(100);
              $(".login-form").fadeOut(100);
             $('#login-form-link').removeClass('active');
             $(this).addClass('active');
@@ -68,13 +64,11 @@ export class IniciarSesionComponent implements OnDestroy {
                           title: 'Error de Autenticación,Las credenciales proporcionadas son incorrectas',
                           icon: 'error'
                       });
-                    //   this._datos.logueado = false;
                   } else {
                       swal.fire({
                           title: 'Error interno del servidor',
                           icon: 'error'
                       });
-                    //   this._datos.logueado = false;
                   }
                   this.loading = false;
               },
@@ -82,15 +76,12 @@ export class IniciarSesionComponent implements OnDestroy {
                   try {
                       if (response) {                          
                           this.service.set_session(response);
-                          this.service.ver_usuario(load.username);
-                          this.router.navigateByUrl('/');
-                        //   this._datos.logueado = true;
+                          this.router.navigateByUrl('/user_task');
                       } else {
                           swal.fire({
                               title: 'Error interno del servidor',
                               icon: 'error'
                           });
-                        //   this._datos.logueado = false;
                           this.loading = false;
                       }
                       this.loading = false;
@@ -99,7 +90,6 @@ export class IniciarSesionComponent implements OnDestroy {
                           title: 'Error interno del servidor',
                           icon: 'error'
                       });
-                    //   this._datos.logueado = false;
                       this.loading = false;
                   }
               }

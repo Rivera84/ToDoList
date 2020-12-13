@@ -17,6 +17,41 @@ const Tarea = require("../../models/tareas");
 const Usuario = require("../../models/usuarios");
 const { log } = require("debug");
 
+//Funcion para enviar correo
+
+function nodemailer(email_user){
+//Importar nodemailer
+  const nodemailer = require("nodemailer");
+  const trasporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'luisrivera084@gmail.com',
+      pass: process.env.NODEMAILER
+    }
+  });
+
+  //Correo
+  const mailOptions = {
+    from: "ToDoList",
+    to: email_user,
+    subject: "Confirmar cuenta ToDoList",
+    text: "Holis"
+  };
+
+  //Enviar correo
+  trasporter.sendMail(mailOptions, (error, info)=>{
+    if(error){
+      res.status(500).send(error.message);
+    }else{
+      console.log("Email enviado");
+      res.status(200).jsonp(req.body);
+    }
+  })
+};
+
+
 // Realizamos la conexión al cluster de MongoDB
 // ==== NOTA: Utilizaremos variables de entorno para evitar que la información confidencial
 // ====       de nuestro usuario de Mongo Atlas se vea afectada por terceros.
@@ -164,6 +199,7 @@ router.post("/registrar_usuario", (req, res, next) => {
         msg: "Ya existe una persona registrada con ese usuario",
       });
     } else {
+	nodemailer(user.email);
       bcrypt.hash(user.password, 10).then((hashedPassword) => {
         user.password = hashedPassword;
         create_user(user);
