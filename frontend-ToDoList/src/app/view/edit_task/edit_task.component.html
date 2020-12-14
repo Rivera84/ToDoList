@@ -1,0 +1,27 @@
+<app-nav-act></app-nav-act>
+<div class="container mt-5 pt-5 pb-5" style="margin-bottom: 6%;" >
+
+    <h3 class="text-center">Actualizar Tarea</h3>
+    <form>
+        <div class="form-group">
+            <label for="formtasktitle">Nombre de la tarea</label>
+            <input [(ngModel)]="Tarea.titulo" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
+                id="formtasktitle" placeholder="Ingrese el título de la tarea" maxlength="100">
+        </div>
+        <div class="form-group">
+            <label for="formtaskdescription">Descripcion:</label>
+            <textarea [(ngModel)]="Tarea.descripcion" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
+                id="formtaskdescription" placeholder="Ingrese la descripción de la tarea" rows="6" maxlength="600"></textarea>
+        </div>
+        
+
+        <div class="botones mt-4 pt-3">
+
+            <button (click)="actualizar_tarea(Tarea)" type="button" class="btn btn-primary mx-1">Guardar</button>
+            <button type="button" class="btn btn-danger mx-1" [routerLink]="['/']">Cancelar</button>
+
+        </div>
+
+    </form>
+</div>
+<app-footer></app-footer>

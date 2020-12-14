@@ -1,1 +1,71 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    --main-bg-color: rgb(18, 168, 18);
+}
+
+.titulo p{
+  font-family: "fuenteTitulo";
+  font-size: 25px;
+}
+
+
+.task{
+    padding: 3px;
+    box-shadow: 0px 3px 9px 1px rgba(0,0,0,0.35);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+@media (min-width: 770px) {
+    .task {
+      margin-left: 50px;
+    }
+  
+
+  }
+
+  .description p{
+    text-align: justify;
+  }
+  .state{
+    margin-top: 5px;
+  }
+  .state .fa-check-circle{
+    color: green;
+    font-size: 25px;
+  }
+  .task{
+    padding: 1%;
+    border-radius: 10px;
+  }
+  .menu-tarea{
+    display: flex;
+    flex-direction: column-reverse;
+    margin-left: 5px;
+  }
+  .titulo-tarea{
+    align-items: center;
+  }
+  #navbarDropdown3::after{
+    margin-left: 0;
+    content: none;
+  }
+
+  #reloj{
+    font-size: 40px;
+    font-weight: bold;
+    columns: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 5px dashed #333;
+    width: 30%;
+    padding:30px;
+    margin: 0px auto; 
+}
+
+.footer{
+  background:#012a36ec;
+}
+.footer p{
+  color: #fff;
+  margin: 0;
+}
