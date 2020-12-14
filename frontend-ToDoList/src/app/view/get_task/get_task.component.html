@@ -8,7 +8,7 @@
 
         <!--Tarjeta para tareas pendientes    <span class="ml-auto mr-2 text-muted">Fecha: 5/12/20</span>-->
         <div *ngFor="let t of list_task">
-          <div class="task  mb-4" *ngIf="t.estado == 'Pendiente'">
+          <div class="task  mb-4 animate__animated animate__pulse" *ngIf="t.estado == 'Pendiente'">
             <div class="task-title col-lg">
               <div class="title row titulo-tarea">
                 <div class="col-10">
@@ -19,11 +19,11 @@
                   <div class="row">
                     <div ngbDropdown class="nav-item mr-auto" ngbDropdown display="dynamic" placement="bottom-right"
                       class="btn-group">
-                      <button type="button" class="btn text-white p-1" tabindex="0" ngbDropdownToggle
+                      <button type="button" class="btn text-white p-1 " tabindex="0" ngbDropdownToggle
                         id="navbarDropdown3" role="button">
                         <i class="fas fa-ellipsis-v text-dark px-2"></i>
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                      <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu ">
                         <!-- Dropdown menu links -->
                         <a ngbDropdownItem class="dropdown-item" [routerLink]="['/edit_task', t._id]"><i
                             class="far fa-edit"></i>
@@ -65,7 +65,7 @@
 
         <!--Tarjeta para tareas finalizadas-->
         <div *ngFor="let t of list_task">
-          <div class="task  mb-4" *ngIf="t.estado == 'Finalizada'">
+          <div class="task  mb-4 animate__animated animate__pulse" *ngIf="t.estado == 'Finalizada'">
             <div class="task-title col-lg">
               <div class="title row titulo-tarea">
                 <div class="col-10">
@@ -80,7 +80,7 @@
                         id="navbarDropdown3" role="button">
                         <i class="fas fa-ellipsis-v text-dark px-2"></i>
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                      <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu ">
                         <!-- Dropdown menu links -->
                         <a ngbDropdownItem class="dropdown-item" [routerLink]="['/edit_task', t._id]"><i
                             class="far fa-edit"></i>

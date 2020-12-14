@@ -10,9 +10,20 @@
 }
 
 .navbar a:hover {
-	color: #3276cf;
+	color: #fff;
 }
 
 .nav-a a{
     color: #012a36;
 }
+
+.navbar a:active {
+    color: #3276cf;
+  }
+
+.navbar a:visited {
+    color: #ffffff;
+  }
+  .nav-a a:visited {
+    color: #000000;
+  }
