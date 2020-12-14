@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AppService} from '../../app.service'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import swal from 'sweetalert2';
 
 @Component({
@@ -10,13 +10,13 @@ import swal from 'sweetalert2';
 })
 export class ActivarCuentaComponent implements OnInit {
 
-  constructor(public service: AppService,  private _activeroute: ActivatedRoute) { }
+  constructor(public service: AppService,  private _activeroute: ActivatedRoute, private _router: Router) { }
 
   ngOnInit(): void {
-    this.cambiarClave();
+    this.activarCuenta();
   }
 
-  cambiarClave() {
+  activarCuenta() {
 
     if (this._activeroute.snapshot.paramMap.get('token')=="") {
 

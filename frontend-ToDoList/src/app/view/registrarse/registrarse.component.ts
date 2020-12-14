@@ -1,11 +1,14 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ViewChild
 } from '@angular/core';
 import {
   AppService
 } from '../../app.service'
 import swal from 'sweetalert2';
+import { FormControlDirective } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrarse',
@@ -14,35 +17,71 @@ import swal from 'sweetalert2';
 })
 export class RegistrarseComponent implements OnInit {
 
-  constructor(public servive: AppService) {}
-
-  ngOnInit(): void {}
-
-  public User = {
+  @ViewChild('registro_form') registro_form: FormControlDirective;
+  public submitted = false;
+  public loading = false;
+  public registro_data = {
     username: "",
-    password: "",
-    confirmpassword:"", 
     email: "",
+    password: "",
+    confirmpassword: ""
   }
+
+  constructor(public servive: AppService, private _router: Router) { }
+
+  ngOnInit(): void { }
+
+  // public User = {
+  //   username: "",
+  //   password: "",
+  //   confirmpassword: "",
+  //   email: "",
+  // }
 
   insert_user() {
-    if (this.User.password == this.User.confirmpassword) {
-    var response;
-    this.servive.insert_user(this.User).subscribe(
-      data => response = data,
-      err => {
-        console.log("Ha ocurrido un error al llamar el servicio");
-      },
-      () => {
-        console.log("Usuario insertado")
+    if (this.registro_form.valid) {
+      if (this.registro_data.password == this.registro_data.confirmpassword) {
+        this.submitted = false;
+        this.loading = true;
+        var response;
+        var load = {
+          username: this.registro_data.username,
+          email: this.registro_data.email,
+          password: this.registro_data.password
+        };
+        this.servive.insert_user(load).subscribe(
+          data => response = data,
+          err => {
+            console.log("Ha ocurrido un error al llamar el servicio ", err);
+            this.loading = false;
+          },
+          () => {
+            // console.log("Usuario insertado")
+
+            swal.fire({
+              title: 'Confirma tu cuenta',
+              text: 'Te hemos enviado un correo electrónico para que puedas completar tu registro',
+              icon: 'info'
+            }).then((result) => {
+              if (result.value) {
+
+                this._router.navigateByUrl('/');
+                this.loading = false;
+              }
+            });
+          }
+        )
+      } else {
+        swal.fire({
+          title: 'Error, Las contraseñas no coinciden',
+          icon: 'error'
+        });
+        this.loading = false;
       }
-    )
-  } else{
-    swal.fire({
-      title: 'Error, Las contraseñas no coinciden',
-      icon: 'error'
-  });
+    } else {
+      this.submitted = true;
+    }
+
   }
-}
 
 }

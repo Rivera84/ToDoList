@@ -1,0 +1,18 @@
+.navbar{
+    background: #012a36;
+}
+
+.navbar p{
+    color: #ffffff;
+}
+.navbar a{
+    color: #ffffff;
+}
+
+.navbar a:hover {
+	color: #3276cf;
+}
+
+.nav-a a{
+    color: #012a36;
+}

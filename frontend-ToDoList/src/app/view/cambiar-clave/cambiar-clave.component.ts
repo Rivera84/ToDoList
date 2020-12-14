@@ -34,6 +34,9 @@ export class CambiarClaveComponent implements OnInit {
         token: this._activeroute.snapshot.paramMap.get('token')
       }
 
+      console.log(load);
+      
+
       this.service.put_cambiarClave(load).subscribe(
         err => {
           console.log("Ha ocurrido un error al llamar el servicio ", err);

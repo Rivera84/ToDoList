@@ -71,12 +71,12 @@ export class IniciarSesionComponent implements OnDestroy {
                   } 
                   if (err.status == 404) {
                     swal.fire({
-                        title: 'Debes activar tu cuenta, rivisa tu correo',
+                        title: 'Debes activar tu cuenta, revisa tu correo',
                         icon: 'error'
                     });
                 }else {
                       swal.fire({
-                          title: 'Error interno del servidor',
+                          title: 'Error interno del servidor 2',
                           icon: 'error'
                       });
                   }
