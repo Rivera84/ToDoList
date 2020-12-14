@@ -49,6 +49,6 @@ export class AppService {
         return this.httpClient.put(this.endpoint + '/recuperar_contrasena',load,{ responseType:'json'});
     }
     put_cambiarClave(load){
-        return this.httpClient.put(this.endpoint + '/cambiar_clave',{params:load, responseType:'json'});
+        return this.httpClient.put(this.endpoint + '/cambiar_clave',load, {responseType:'json'});
     }
 }

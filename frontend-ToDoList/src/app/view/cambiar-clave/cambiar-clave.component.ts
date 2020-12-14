@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import swal from 'sweetalert2';
 import { AppService } from '../../app.service'
 //import { ActivatedRoute, Params } from '@angular/router';
 //import {HttpClient, HttpHeaders} from '@angular/common/http'
@@ -10,22 +12,41 @@ import { AppService } from '../../app.service'
 })
 export class CambiarClaveComponent implements OnInit {
   public login_data = {
-    password: ""
+    password: "",
+    confirmpassword: ""
   }
 
-  constructor(public service:AppService) {
+  
+  constructor(public service: AppService, private _activeroute: ActivatedRoute) {
 
-   }
+  }  
+
 
   ngOnInit(): void {
   }
 
-  cambiarClave(){
-    console.log(this.login_data);
-    this.service.put_cambiarClave(this.login_data).subscribe(
-        err =>{
-            console.log("Ha ocurrido un error al llamar el servicio" , this.login_data);
+  cambiarClave() {
+
+    if (this.login_data.password == this.login_data.confirmpassword) {
+
+      var load = {
+        password: this.login_data.password,
+        token: this._activeroute.snapshot.paramMap.get('token')
+      }
+
+      this.service.put_cambiarClave(load).subscribe(
+        err => {
+          console.log("Ha ocurrido un error al llamar el servicio ", err);
         }
-    )
-}
+      )
+    }
+    else{
+      swal.fire({
+        title: 'Error, Las contraseñas no coinciden',
+        icon: 'error'
+    });
+    }
+
+
+  }
 }

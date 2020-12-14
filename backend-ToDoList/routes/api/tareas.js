@@ -296,10 +296,11 @@ router.put("/recuperar_contrasena", async (req, res, next) =>{
 
 });
 
-router.put("/cambiar_clave/:token", async (req, res) =>{
+router.put("/cambiar_clave", async (req, res) =>{
   //const password = req.body.password;
- const token = req.query;
-  console.log( token);
+ const token = req.body.token;
+ 
+  console.log(token);
 })
 
 
