@@ -1,9 +1,18 @@
+@font-face {
+	font-family: "fuenteTitulo";
+	src: url("../../../assets/KaushanScript-Regular.ttf");
+  }
+  .titulo {
+	font-family: "fuenteTitulo";
+	font-size: 35px;
+  }
+
 .panel-login {
 	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-    margin-top: 100px;
+    margin-top: 50px;
 }
 .panel-login>.panel-heading {
 	color: #00415d;
@@ -52,7 +61,7 @@
 	border-color: #ccc;
 }
 .btn-login {
-	background-color: #59B2E0;
+	background-color: #012a36ec;
 	outline: none;
 	color: #fff;
 	font-size: 14px;
@@ -60,12 +69,12 @@
 	font-weight: normal;
 	padding: 14px 0;
 	text-transform: uppercase;
-	border-color: #59B2E6;
+
 }
 .btn-login:hover,
 .btn-login:focus {
 	color: #fff;
-	background-color: #53A3CD;
+	background-color: #012a36c5;
 	border-color: #53A3CD;
 }
 .forgot-password {

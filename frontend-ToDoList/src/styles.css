@@ -3,11 +3,6 @@
     --main-bg-color: rgb(18, 168, 18);
 }
 
-@font-face {
-  font-family: "fuenteTitulo";
-  src: url("./assets/KaushanScript-Regular.ttf");
-}
-
 .titulo p{
   font-family: "fuenteTitulo";
   font-size: 25px;
@@ -65,4 +60,12 @@
     width: 30%;
     padding:30px;
     margin: 0px auto; 
+}
+
+.footer{
+  background:#012a36ec;
+}
+.footer p{
+  color: #fff;
+  margin: 0;
 }

@@ -60,6 +60,11 @@ export class NavbarComponent {
 
 
   post_task() {
+
+    if(this.Task.titulo =="" || this.Task.descripcion ==""){
+      swal.fire('¡Recuerda agregar una tarea!', '', 'error');
+   
+  }else{
     var respone;
 
     var us= JSON.parse(localStorage.getItem("usuario"));    
@@ -83,7 +88,8 @@ export class NavbarComponent {
       }
     )
     // this.router.navigateByUrl('/');
-
+  }
+  
   }
 
   cerrar_sesion(){

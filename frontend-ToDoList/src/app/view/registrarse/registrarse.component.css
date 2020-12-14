@@ -1,6 +1,6 @@
 
 .btn-register {
-	background-color: #1CB94E;
+	background-color: #012a36ec;
 	outline: none;
 	color: #fff;
 	font-size: 14px;
@@ -8,11 +8,11 @@
 	font-weight: normal;
 	padding: 14px 0;
 	text-transform: uppercase;
-	border-color: #1CB94A;
+
 }
 .btn-register:hover,
 .btn-register:focus {
 	color: #fff;
-	background-color: #1CA347;
-	border-color: #1CA347;
+	background-color: #012a36c5;
+
 }

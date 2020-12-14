@@ -262,7 +262,7 @@ router.post("/iniciar_sesion", async (req, res, next) => {
       res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
     }
     else if(VerificarUsuario[0].estado=="0"){
-      res.status(400).json({ message: "Debes activar tu cuenta" });
+      res.status(404).json({ message: "Debes activar tu cuenta" });
     }
     else {
       bcrypt.compare(
@@ -307,7 +307,6 @@ router.put("/recuperar_contrasena", async (req, res, next) =>{
 
       //Enviar correo
       nodemailer(emailUser,subject ,LinkValidacion);
-
      try {
        datos = {resetToken: token}
        const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {new:true});

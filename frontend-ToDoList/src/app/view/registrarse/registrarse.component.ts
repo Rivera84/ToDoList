@@ -5,7 +5,7 @@ import {
 import {
   AppService
 } from '../../app.service'
-
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registrarse',
@@ -20,11 +20,13 @@ export class RegistrarseComponent implements OnInit {
 
   public User = {
     username: "",
-    password: "", 
+    password: "",
+    confirmpassword:"", 
     email: "",
   }
 
   insert_user() {
+    if (this.User.password == this.User.confirmpassword) {
     var response;
     this.servive.insert_user(this.User).subscribe(
       data => response = data,
@@ -35,6 +37,12 @@ export class RegistrarseComponent implements OnInit {
         console.log("Usuario insertado")
       }
     )
+  } else{
+    swal.fire({
+      title: 'Error, Las contraseñas no coinciden',
+      icon: 'error'
+  });
   }
+}
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router} from '@angular/router';
 import swal from 'sweetalert2';
 import { AppService } from '../../app.service'
 //import { ActivatedRoute, Params } from '@angular/router';
@@ -17,7 +17,7 @@ export class CambiarClaveComponent implements OnInit {
   }
 
   
-  constructor(public service: AppService, private _activeroute: ActivatedRoute) {
+  constructor(public service: AppService, private _activeroute: ActivatedRoute, private route: Router) {
 
   }  
 
@@ -37,6 +37,9 @@ export class CambiarClaveComponent implements OnInit {
       this.service.put_cambiarClave(load).subscribe(
         err => {
           console.log("Ha ocurrido un error al llamar el servicio ", err);
+        },
+        ()=>{
+          this.route.navigateByUrl('/iniciar_sesion');
         }
       )
     }
