@@ -9,6 +9,7 @@ const Usuario = new Schema({
     username: String,
     password: String,
     email: String,
+    estado: String,
     resetToken: String,
 });
 

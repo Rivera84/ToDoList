@@ -192,7 +192,9 @@ router.post("/registrar_usuario", (req, res, next) => {
   var user = {
     username: req.body.username,
     password: req.body.password,
-    email: req.body.email
+    email: req.body.email,
+    estado: "0",
+    resetToken: ""
   };
 
   Usuario.countDocuments({ username: user.username }, function (err, count) {
@@ -204,8 +206,8 @@ router.post("/registrar_usuario", (req, res, next) => {
 
     const subject = "Activar cuenta ToDoList"
      var token = jwt.sign({ username: user.username }, secret_key, {expiresIn: "10m"});
-     const LinkValidacion = `Activar cuenta http://localhost:4200/cambiar_contrasena/${token}`;
-
+     const LinkValidacion = `Activar cuenta http://localhost:4200/activar_cuenta/${token}`;
+      user.resetToken= token;
 	    nodemailer(user.email,subject, LinkValidacion);
       bcrypt.hash(user.password, 10).then((hashedPassword) => {
         user.password = hashedPassword;
@@ -226,6 +228,27 @@ router.post("/registrar_usuario", (req, res, next) => {
   });
 });
 
+router.put("/activar_cuenta", async (req, res)=>{
+  const token = req.body.token
+  console.log(token);
+
+  VerificarUsuario = await Usuario.find({ resetToken: token });
+  const idUser = VerificarUsuario[0]._id
+  console.log(VerificarUsuario);
+
+  try {
+
+    datos = {estado: 1}
+    const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {new:true});
+    res.status(200).json({user: userUpdate});
+    
+  } catch (error) {
+    res.status(400).json({message: "Ha ocurrido un error"});
+  }
+
+
+})
+
 // Inicio de sesión de usuario
 router.post("/iniciar_sesion", async (req, res, next) => {
   var user = {
@@ -237,7 +260,11 @@ router.post("/iniciar_sesion", async (req, res, next) => {
     VerificarUsuario = await Usuario.find({ username: user.usuar });
     if (VerificarUsuario == "") {
       res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
-    } else {
+    }
+    else if(VerificarUsuario[0].estado=="0"){
+      res.status(400).json({ message: "Debes activar tu cuenta" });
+    }
+    else {
       bcrypt.compare(
         user.contra,
         VerificarUsuario[0].password,

@@ -8,6 +8,7 @@ import { IniciarSesionComponent } from './view/iniciar_sesion/iniciar_sesion.com
 import { RegistrarseComponent } from './view/registrarse/registrarse.component';
 import {RecuperarClaveComponent} from '../app/view/recuperar-clave/recuperar-clave.component'
 import {CambiarClaveComponent} from './view/cambiar-clave/cambiar-clave.component'
+import { ActivarCuentaComponent } from './view/activar-cuenta/activar-cuenta.component'
 import { AuthGuard } from './guards/auth.guard';
 import { AppService } from './app.service';
 import { DatosService } from './services/datos.service';
@@ -40,6 +41,10 @@ const routes: Routes = [
     {
         path: 'cambiar_contrasena/:token',
         component: CambiarClaveComponent
+    },
+    {
+        path: 'activar_cuenta/:token',
+        component: ActivarCuentaComponent
     }  
 ];
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { log } from 'console';
 
 @Injectable( {providedIn: 'root'} )
 export class AppService {
@@ -50,5 +51,8 @@ export class AppService {
     }
     put_cambiarClave(load){
         return this.httpClient.put(this.endpoint + '/cambiar_clave',load, {responseType:'json'});
+    }
+    put_activarCuenta(load){
+        return this.httpClient.put(this.endpoint + '/activar_cuenta', load ,{responseType:'json'});
     }
 }

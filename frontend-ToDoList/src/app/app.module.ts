@@ -22,6 +22,7 @@ import { NavActComponent } from './view/nav-act/nav-act.component';
 import { FooterComponent } from './view/footer/footer.component';
 import { RecuperarClaveComponent } from './view/recuperar-clave/recuperar-clave.component';
 import { CambiarClaveComponent } from './view/cambiar-clave/cambiar-clave.component';
+import { ActivarCuentaComponent } from './view/activar-cuenta/activar-cuenta.component';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { CambiarClaveComponent } from './view/cambiar-clave/cambiar-clave.compon
     IniciarSesionComponent,
     RegistrarseComponent,
     NavbarComponent,    
-    NavActComponent, FooterComponent, RecuperarClaveComponent, CambiarClaveComponent,
+    NavActComponent, FooterComponent, RecuperarClaveComponent, CambiarClaveComponent, ActivarCuentaComponent,
   ],
   imports: [
     BrowserModule,
