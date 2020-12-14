@@ -1,0 +1,19 @@
+<p>recuperar-clave works!</p>
+
+<form #login_form="ngForm" class="login-form" action="#" method="post" role="form" style="display: block;">
+    <div class="form-group">
+        <label for="username">Ingrese su usuario</label>
+        <input #username="ngModel" [(ngModel)]="login_data.username" type="text" name="username"  tabindex="1" class="form-control" required="true" placeholder="Usuario" value="">
+    </div>
+   
+ 
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <a (click)="restaurarClave()" href="#" tabindex="5" class="forgot-password">Enviar correo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

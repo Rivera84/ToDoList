@@ -261,30 +261,45 @@ router.post("/iniciar_sesion", async (req, res, next) => {
 
 
 //video https://www.youtube.com/watch?v=O49g_OVPe6Q
-router.put("/contrasena_olvidada", async (req, res, next) =>{
-  const user = req.body.user;
-  let verificationLink;
+router.put("/recuperar_contrasena", async (req, res, next) =>{
+  const username = req.body.username;
+  VerificarUsuario = await Usuario.find({ username: username });
+  console.log(username, VerificarUsuario[0].email);
+  const idUser = VerificarUsuario[0].id;
+  const emailUser = VerificarUsuario[0].email;
+  const subject = "Restaurar contraseña ToDoList"
+  //console.log("vamos bien");
 
-  try{
-    VerificarUsuario = await Usuario.find({username: user});
-    if(VerificarUsuario = ""){
-      res.status(400).json({message: "El correo ha sido enviado"}); //Aunque el correo no se haya encontrado
-    }else{
-      const token = jwt.sign({username: user}, secret_key, {expiresIn: '10m'});
-      verificationLink = `http://localhost:4200/actualizar_contrasena/${token}`;
-      resetToken=token;
+  Usuario.countDocuments({ username: username }, async function (err, count) {
+    if (count > 0) {
+     console.log("vamos bien");
+     var token = jwt.sign({ username: username }, secret_key, {expiresIn: "10m"});
+      const LinkValidacion = `Restaurar contraseña http://localhost:4200/cambiar_contrasena/${token}`;
 
-      //TODO: enviar correo
+      //Enviar correo
+      nodemailer(emailUser,subject ,LinkValidacion);
 
-      try {
-        const datos = resetToken;
-      } catch (error) {
-        //TODO: guardar token
-      }
+     try {
+       datos = {resetToken: token}
+       const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {new:true});
+       res.status(200).json({user: userUpdate});
+       
+     } catch (error) {
+       res.status(400).json({message: "Ha ocurrido un error"});
+     }
+    } else {
+
     }
-  }catch{
-    res.status(400).json({message: "El correo ha sido enviado"}); //Aunque el correo no se haya encontrado
-  }
+  
+  });
+
+
+});
+
+router.put("/cambiar_clave/:token", async (req, res) =>{
+  //const password = req.body.password;
+ const token = req.query;
+  console.log( token);
 })
 
 

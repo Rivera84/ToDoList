@@ -45,4 +45,10 @@ export class AppService {
     insert_user(load):Observable<any>{
         return this.httpClient.post(this.endpoint + '/registrar_usuario', load, {responseType:'json'});
     }
+    get_restaurarClave(load){
+        return this.httpClient.put(this.endpoint + '/recuperar_contrasena',load,{ responseType:'json'});
+    }
+    put_cambiarClave(load){
+        return this.httpClient.put(this.endpoint + '/cambiar_clave',{params:load, responseType:'json'});
+    }
 }
