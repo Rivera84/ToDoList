@@ -188,6 +188,7 @@ router.post("/encontrar_tarea", async (req, res, next) => {
 
 //Agregar usuario
 router.post("/registrar_usuario", (req, res, next) => {
+
   var user = {
     username: req.body.username,
     password: req.body.password,
@@ -201,10 +202,11 @@ router.post("/registrar_usuario", (req, res, next) => {
       });
     } else {
 
-      const message = "Verificar cuenta";
-      const subjet = "Confirmar cuenta ToDoList";
+    const subject = "Activar cuenta ToDoList"
+     var token = jwt.sign({ username: user.username }, secret_key, {expiresIn: "10m"});
+     const LinkValidacion = `Activar cuenta http://localhost:4200/cambiar_contrasena/${token}`;
 
-	    nodemailer(user.email,subjet, message);
+	    nodemailer(user.email,subject, LinkValidacion);
       bcrypt.hash(user.password, 10).then((hashedPassword) => {
         user.password = hashedPassword;
         create_user(user);
@@ -260,7 +262,7 @@ router.post("/iniciar_sesion", async (req, res, next) => {
 });
 
 
-//video https://www.youtube.com/watch?v=O49g_OVPe6Q
+
 router.put("/recuperar_contrasena", async (req, res, next) =>{
   const username = req.body.username;
   VerificarUsuario = await Usuario.find({ username: username });
@@ -297,10 +299,36 @@ router.put("/recuperar_contrasena", async (req, res, next) =>{
 });
 
 router.put("/cambiar_clave", async (req, res) =>{
-  //const password = req.body.password;
- const token = req.body.token;
+  const password = req.body.password;
+  const token = req.body.token;
+  VerificarUsuario = await Usuario.find({ resetToken: token });
+  const idUser = VerificarUsuario[0]._id
+  console.log(VerificarUsuario);
+  Usuario.countDocuments({ resetToken: token }, async function (err, count) {
+    if (count > 0) {
+     console.log("vamos bien");
+     
+     try {
+      
+      bcrypt.hash(password, 10).then((hashedPassword) => {
+        passwordHashed = hashedPassword;
+       // create_user(user);
+      });
+      datos = {password: passwordHashed}
+      const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {new:true});
+      res.status(200).json({user: userUpdate});
+      
+    } catch (error) {
+      res.status(400).json({message: "Ha ocurrido un error"});
+    }
  
-  console.log(token);
+    } else {
+
+    }
+  
+  });
+  
+  //console.log(token);
 })
 
 
