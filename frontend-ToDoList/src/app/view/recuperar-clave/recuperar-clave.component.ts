@@ -22,8 +22,7 @@ export class RecuperarClaveComponent implements OnInit {
   constructor(public service: AppService, private router: Router) { }
 
   ngOnInit(): void {
-  }
-  f
+  }  
 
 
   restaurarClave() {
@@ -31,7 +30,7 @@ export class RecuperarClaveComponent implements OnInit {
       this.submitted = false;
       this.loading = true;
       var response;
-      console.log(this.login_data);
+      // console.log(this.login_data);
       try {
 
 
