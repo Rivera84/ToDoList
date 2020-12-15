@@ -39,3 +39,20 @@
 .form{
     margin-left: 100px;
 }
+.btn-login {
+	background-color: #012a36ec;
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+
+}
+.btn-login:hover,
+.btn-login:focus {
+	color: #fff;
+	background-color: #012a36c5;
+	border-color: #53A3CD;
+}

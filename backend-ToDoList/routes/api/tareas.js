@@ -16,20 +16,19 @@ const mongoose = require("mongoose");
 const Tarea = require("../../models/tareas");
 const Usuario = require("../../models/usuarios");
 
-
 //Funcion para enviar correo
 
-function nodemailer(email_user,subject_email, text_email){
-//Importar nodemailer
+function nodemailer(email_user, subject_email, text_email) {
+  //Importar nodemailer
   const nodemailer = require("nodemailer");
   const trasporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-      user: 'luisrivera084@gmail.com',
-      pass: process.env.NODEMAILER
-    }
+      user: "luisrivera084@gmail.com",
+      pass: process.env.NODEMAILER,
+    },
   });
 
   //Correo
@@ -37,20 +36,19 @@ function nodemailer(email_user,subject_email, text_email){
     from: "ToDoList",
     to: email_user,
     subject: subject_email,
-    text: text_email
+    text: text_email,
   };
 
   //Enviar correo
-  trasporter.sendMail(mailOptions, (error, info)=>{
-    if(error){
+  trasporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
       res.status(500).send(error.message);
-    }else{
+    } else {
       console.log("Email enviado");
       res.status(200).jsonp(req.body);
     }
-  })
-};
-
+  });
+}
 
 // Realizamos la conexión al cluster de MongoDB
 // ==== NOTA: Utilizaremos variables de entorno para evitar que la información confidencial
@@ -96,7 +94,7 @@ router.get("/ver_tareas", async (req, res, next) => {
 router.put("/actualizar_tarea", async (req, res) => {
   const id = req.body.id;
 
-  const tarea = await Tarea.findById(id);  
+  const tarea = await Tarea.findById(id);
 
   if (!tarea) {
     res.status(404).json({
@@ -188,13 +186,12 @@ router.post("/encontrar_tarea", async (req, res, next) => {
 
 //Agregar usuario
 router.post("/registrar_usuario", (req, res, next) => {
-
   var user = {
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
     estado: "0",
-    resetToken: ""
+    resetToken: "",
   };
 
   Usuario.countDocuments({ username: user.username }, function (err, count) {
@@ -203,19 +200,20 @@ router.post("/registrar_usuario", (req, res, next) => {
         msg: "Ya existe una persona registrada con ese usuario",
       });
     } else {
-
-    const subject = "Activar cuenta ToDoList"
-     var token = jwt.sign({ username: user.username }, secret_key, {expiresIn: "10m"});
-     const LinkValidacion = `Activar cuenta http://localhost:4200/activar_cuenta/${token}`;
-      user.resetToken= token;
-	    nodemailer(user.email,subject, LinkValidacion);
+      const subject = "Activar cuenta ToDoList";
+      var token = jwt.sign({ username: user.username }, secret_key, {
+        expiresIn: "10m",
+      });
+      const LinkValidacion = `Bienvenido ${user.username}, para activar tu cuenta de ToDoList haz click en el siguiente enlace: http://localhost:4200/activar_cuenta/${token}`;
+      user.resetToken = token;
+      nodemailer(user.email, subject, LinkValidacion);
       bcrypt.hash(user.password, 10).then((hashedPassword) => {
         user.password = hashedPassword;
         create_user(user);
       });
       const create_user = (user) => {
         try {
-          console.log(user);
+          // console.log(user);
           const usuario = new Usuario(user);
           usuario.save();
           res.status(200).send();
@@ -228,26 +226,22 @@ router.post("/registrar_usuario", (req, res, next) => {
   });
 });
 
-router.put("/activar_cuenta", async (req, res)=>{
-  const token = req.body.token
-  console.log(token);
+router.put("/activar_cuenta", async (req, res) => {
+  const token = req.body.token;
 
   VerificarUsuario = await Usuario.find({ resetToken: token });
-  const idUser = VerificarUsuario[0]._id
-  console.log(VerificarUsuario);
+  const idUser = VerificarUsuario[0]._id;
 
   try {
-
-    datos = {estado: 1}
-    const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {new:true});
-    res.status(200).json({user: userUpdate});
-    
+    datos = { estado: 1 };
+    const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {
+      new: true,
+    });
+    res.status(200).json({ user: userUpdate });
   } catch (error) {
-    res.status(400).json({message: "Ha ocurrido un error"});
+    res.status(400).json({ message: "Ha ocurrido un error" });
   }
-
-
-})
+});
 
 // Inicio de sesión de usuario
 router.post("/iniciar_sesion", async (req, res, next) => {
@@ -260,102 +254,106 @@ router.post("/iniciar_sesion", async (req, res, next) => {
     VerificarUsuario = await Usuario.find({ username: user.usuar });
     if (VerificarUsuario == "") {
       res.status(400).json({ message: "Usuario o Contraseña Incorrectos" });
-    }
-    else if(VerificarUsuario[0].estado=="0"){
+    } else if (VerificarUsuario[0].estado == "0") {
       res.status(404).json({ message: "Debes activar tu cuenta" });
-    }
-    else {
+    } else {
       bcrypt.compare(
         user.contra,
         VerificarUsuario[0].password,
         (error, isMatch) => {
           if (isMatch) {
-            var token = jwt.sign({ userId: VerificarUsuario[0]._id }, secret_key);
+            var token = jwt.sign(
+              { userId: VerificarUsuario[0]._id },
+              secret_key
+            );
             res.status(200).json({ token });
           } else if (error) {
-            res.status(400).json(error);            
+            res.status(400).json(error);
           } else {
             res
               .status(400)
-              .json({ message: "Usuario o Contraseña Incorrectos" });            
+              .json({ message: "Usuario o Contraseña Incorrectos" });
           }
         }
       );
     }
   } catch (error) {
-    res.status(500).json({message: "Ha ocurrido un error en el servidor"});
+    res.status(500).json({ message: "Ha ocurrido un error en el servidor" });
     console.log("Ocurrió un error " + error);
   }
 });
 
-
-
-router.put("/recuperar_contrasena", async (req, res, next) =>{
+router.put("/recuperar_contrasena", async (req, res, next) => {
   const username = req.body.username;
   VerificarUsuario = await Usuario.find({ username: username });
-  console.log(username, VerificarUsuario[0].email);
-  const idUser = VerificarUsuario[0].id;
-  const emailUser = VerificarUsuario[0].email;
-  const subject = "Restaurar contraseña ToDoList"
-  //console.log("vamos bien");
+  // console.log(username, VerificarUsuario[0].email);
+  if (VerificarUsuario[0]) {
+    const idUser = VerificarUsuario[0]._id;
+    const emailUser = VerificarUsuario[0].email;
+    const subject = "Restaurar contraseña ToDoList";
 
-  Usuario.countDocuments({ username: username }, async function (err, count) {
-    if (count > 0) {
-     console.log("vamos bien");
-     var token = jwt.sign({ username: username }, secret_key, {expiresIn: "10m"});
-      const LinkValidacion = `Restaurar contraseña http://localhost:4200/cambiar_contrasena/${token}`;
+    //console.log("vamos bien");
 
-      //Enviar correo
-      nodemailer(emailUser,subject ,LinkValidacion);
-     try {
-       datos = {resetToken: token}
-       const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {new:true});
-       res.status(200).json({user: userUpdate});
-       
-     } catch (error) {
-       res.status(400).json({message: "Ha ocurrido un error"});
-     }
-    } else {
+    Usuario.countDocuments({ username: username }, async function (err, count) {
+      if (count > 0) {
+        //  console.log("vamos bien");
+        var token = jwt.sign({ username: username }, secret_key, {
+          expiresIn: "10m",
+        });
+        const LinkValidacion = `Hola ${username}, para restaurar tu contraseña haz click en el siguiente enlace: http://localhost:4200/cambiar_contrasena/${token}`;
 
-    }
-  
-  });
-
-
+        //Enviar correo
+        nodemailer(emailUser, subject, LinkValidacion);
+        try {
+          datos = { resetToken: token };
+          const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {
+            new: true,
+          });
+          res.status(200).json({ user: userUpdate });
+        } catch (error) {
+          res.status(400).json({ message: "Ha ocurrido un error" });
+        }
+      } else {
+        res.status(404).json({
+          message: "Usuario no encontrado",
+        });
+      }
+    });
+  } else {
+    res.status(404).json({
+      message: "Usuario no encontrado",
+    });
+  }
 });
 
-router.put("/cambiar_clave", async (req, res) =>{
+router.put("/cambiar_clave", async (req, res) => {
   const password = req.body.password;
   const token = req.body.token;
   VerificarUsuario = await Usuario.find({ resetToken: token });
-  const idUser = VerificarUsuario[0]._id
-  console.log(VerificarUsuario);
+  const idUser = VerificarUsuario[0]._id;
+  // console.log(VerificarUsuario);
   Usuario.countDocuments({ resetToken: token }, async function (err, count) {
     if (count > 0) {
-     console.log("vamos bien");
-     
-     try {
-      
-      bcrypt.hash(password, 10).then((hashedPassword) => {
-        passwordHashed = hashedPassword;
-       // create_user(user);
-      });
-      datos = {password: passwordHashed}
-      const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {new:true});
-      res.status(200).json({user: userUpdate});
-      
-    } catch (error) {
-      res.status(400).json({message: "Ha ocurrido un error"});
-    }
- 
+      //  console.log("vamos bien");
+
+      try {        
+        bcrypt.hash(password, 10).then((hashedPassword) => {
+          passwordHashed = hashedPassword;
+          // create_user(user);
+        });
+        datos = { password: passwordHashed };
+        const userUpdate = await Usuario.findByIdAndUpdate(idUser, datos, {
+          new: true,
+        });        
+        res.status(200).json({ user: userUpdate });
+      } catch (error) {
+        res.status(400).json({ message: "Ha ocurrido un error" });
+      }
     } else {
-
     }
-  
   });
-  
-  //console.log(token);
-})
 
+  //console.log(token);
+});
 
 module.exports = router;

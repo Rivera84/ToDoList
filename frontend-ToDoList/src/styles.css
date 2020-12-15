@@ -2,12 +2,20 @@
 :root{
     --main-bg-color: rgb(18, 168, 18);
 }
+@font-face {
+  font-family: "fuenteTitulo";
+  src: url("./assets/KaushanScript-Regular.ttf");
+}
 
 .titulo p{
   font-family: "fuenteTitulo";
   font-size: 25px;
 }
 
+.letra{
+  font-family: "fuenteTitulo";
+  font-size: 27px;
+}
 
 .task{
     padding: 3px;

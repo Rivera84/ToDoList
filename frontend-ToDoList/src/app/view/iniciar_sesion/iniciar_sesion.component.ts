@@ -62,21 +62,21 @@ export class IniciarSesionComponent implements OnDestroy {
           this.service.iniciar_sesion(load).subscribe(
               data => response = data,
               err => {
-                  if (err.status == 400) {
-                      swal.fire({
-                          title: 'Error de Autenticación,Las credenciales proporcionadas son incorrectas',
-                          icon: 'error'
-                      });
-
-                  } 
                   if (err.status == 404) {
                     swal.fire({
-                        title: 'Debes activar tu cuenta, rivisa tu correo',
+                        title: 'Debes activar tu cuenta, revisa tu correo',
                         icon: 'error'
                     });
-                }else {
+                }
+                else if (err.status == 400) {
+                    swal.fire({
+                        title: 'Error! Las credenciales proporcionadas son incorrectas',
+                        icon: 'error'
+                    });
+
+                } else {
                       swal.fire({
-                          title: 'Error interno del servidor',
+                          title: 'Error! Tenemos problemas con el servidor',
                           icon: 'error'
                       });
                   }
