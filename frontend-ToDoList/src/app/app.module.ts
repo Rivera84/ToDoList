@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import {AppRoutingModule} from '../app/app.router';
-import {GetTaskComponent} from './view/get_task/get_task.component';
+import { AppRoutingModule } from '../app/app.router';
+import { GetTaskComponent } from './view/get_task/get_task.component';
 
 import { AppService } from './app.service';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
@@ -23,6 +23,7 @@ import { FooterComponent } from './view/footer/footer.component';
 import { RecuperarClaveComponent } from './view/recuperar-clave/recuperar-clave.component';
 import { CambiarClaveComponent } from './view/cambiar-clave/cambiar-clave.component';
 import { ActivarCuentaComponent } from './view/activar-cuenta/activar-cuenta.component';
+import { WidgetClimaComponent } from './view/widget-clima/widget-clima.component';
 
 
 @NgModule({
@@ -33,8 +34,8 @@ import { ActivarCuentaComponent } from './view/activar-cuenta/activar-cuenta.com
     EditTaskComponent,
     IniciarSesionComponent,
     RegistrarseComponent,
-    NavbarComponent,    
-    NavActComponent, FooterComponent, RecuperarClaveComponent, CambiarClaveComponent, ActivarCuentaComponent,
+    NavbarComponent,
+    NavActComponent, FooterComponent, RecuperarClaveComponent, CambiarClaveComponent, ActivarCuentaComponent, WidgetClimaComponent,
   ],
   imports: [
     BrowserModule,
