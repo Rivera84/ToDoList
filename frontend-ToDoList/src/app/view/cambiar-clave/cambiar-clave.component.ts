@@ -42,7 +42,14 @@ export class CambiarClaveComponent implements OnInit {
           console.log("Ha ocurrido un error al llamar el servicio ", err);
         },
         ()=>{
-          this.route.navigateByUrl('/iniciar_sesion');
+          swal.fire({
+            title: '¡Contraseña cambiada exitosamente!',
+            text: 'Tu contraseña ha cambiado, debes iniciar sesión con tus nuevas credenciales',
+            icon: 'success'
+          }).then((result) => {
+            this.route.navigateByUrl('/iniciar_sesion');
+          });          
+          
         }
       )
     }

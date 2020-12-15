@@ -13,6 +13,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AppService } from './app.service';
 import { DatosService } from './services/datos.service';
 import { NavbarComponent } from './view/navbar/navbar.component';
+import { LogGuard } from './guards/log.guard';
 
 
 const routes: Routes = [
@@ -28,23 +29,27 @@ const routes: Routes = [
     },
     {
         path: 'iniciar_sesion',
-        component: IniciarSesionComponent
+        component: IniciarSesionComponent,
+        canActivate: [LogGuard]
     },
     {
         path: 'registrarse',
-        component: RegistrarseComponent
-    }  ,
+        component: RegistrarseComponent,
+        canActivate: [LogGuard]
+    },
     {
         path: 'recuperar_clave',
         component: RecuperarClaveComponent
     },
     {
         path: 'cambiar_contrasena/:token',
-        component: CambiarClaveComponent
+        component: CambiarClaveComponent,
+        canActivate: [LogGuard]
     },
     {
         path: 'activar_cuenta/:token',
-        component: ActivarCuentaComponent
+        component: ActivarCuentaComponent,
+        canActivate: [LogGuard]
     }  
 ];
 
