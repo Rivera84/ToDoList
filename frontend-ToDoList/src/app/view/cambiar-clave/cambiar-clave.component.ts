@@ -46,7 +46,7 @@ export class CambiarClaveComponent implements OnInit {
         }
 
         this.service.put_cambiarClave(load).subscribe(
-          data => response = data,
+          // data => response = data,
           err => {
             console.log("Ha ocurrido un error al llamar el servicio ", err);
             this.loading = false;
