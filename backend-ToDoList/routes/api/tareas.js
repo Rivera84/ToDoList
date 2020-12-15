@@ -204,7 +204,7 @@ router.post("/registrar_usuario", (req, res, next) => {
       var token = jwt.sign({ username: user.username }, secret_key, {
         expiresIn: "10m",
       });
-      const LinkValidacion = `Bienvenido ${user.username}! para activar tu cuenta de ToDoList haz click en el siguiente enlace: http://localhost:4200/activar_cuenta/${token}`;
+      const LinkValidacion = `Bienvenido ${user.username}, para activar tu cuenta de ToDoList haz click en el siguiente enlace: http://localhost:4200/activar_cuenta/${token}`;
       user.resetToken = token;
       nodemailer(user.email, subject, LinkValidacion);
       bcrypt.hash(user.password, 10).then((hashedPassword) => {
@@ -300,7 +300,7 @@ router.put("/recuperar_contrasena", async (req, res, next) => {
         var token = jwt.sign({ username: username }, secret_key, {
           expiresIn: "10m",
         });
-        const LinkValidacion = `Hola ${username} para restaurar tu contraseña haz click en el siguiente enlace: http://localhost:4200/cambiar_contrasena/${token}`;
+        const LinkValidacion = `Hola ${username}, para restaurar tu contraseña haz click en el siguiente enlace: http://localhost:4200/cambiar_contrasena/${token}`;
 
         //Enviar correo
         nodemailer(emailUser, subject, LinkValidacion);

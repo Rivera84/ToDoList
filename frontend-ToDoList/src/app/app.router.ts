@@ -34,12 +34,13 @@ const routes: Routes = [
     },
     {
         path: 'registrarse',
-        component: RegistrarseComponent,
+        component: IniciarSesionComponent,
         canActivate: [LogGuard]
     },
     {
         path: 'recuperar_clave',
-        component: RecuperarClaveComponent
+        component: RecuperarClaveComponent,
+        canActivate: [LogGuard]
     },
     {
         path: 'cambiar_contrasena/:token',

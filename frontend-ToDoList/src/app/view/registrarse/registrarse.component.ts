@@ -52,12 +52,12 @@ export class RegistrarseComponent implements OnInit {
         this.servive.insert_user(load).subscribe(
           data => response = data,
           err => {
-            if(err.status == 400){
+            if (err.status == 400) {
               swal.fire({
                 title: 'Ya existe una persona registrada con ese nombre de usuario',
                 icon: 'error'
               });
-            }            
+            }
             console.log("Ha ocurrido un error al llamar el servicio ", err);
             this.loading = false;
           },
@@ -68,9 +68,9 @@ export class RegistrarseComponent implements OnInit {
               title: 'Confirma tu cuenta',
               text: 'Te hemos enviado un correo electrónico para que puedas completar tu registro',
               icon: 'info'
-            }).then((result) => {              
+            }).then((result) => {
+                this.loading = false;
                 this._router.navigateByUrl('/');
-                this.loading = false;              
             });
           }
         )
