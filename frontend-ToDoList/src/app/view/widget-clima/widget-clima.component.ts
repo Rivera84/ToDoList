@@ -16,7 +16,7 @@ export class WidgetClimaComponent implements OnInit {
       isDay: true
     };
     this.getWeatherData();
-    this.getHours();
+    // this.getHours();
     // console.log(this.WeatherData);
   }
 
@@ -29,25 +29,28 @@ export class WidgetClimaComponent implements OnInit {
     // this.setWeatherData(data);
   }
 
-  getHours(){
-    const date = new Date();
-    const hora = date.getHours();
-    return hora;
-  }
+  // getHours(){
+  //   const date = new Date();
+  //   const hora = date.getHours();
+  //   return hora;
+  // }
 
   setWeatherData(data){
 
-    if(this.getHours()>=6 && this.getHours()<=18){
-      this.WeatherData.isDay = true;
-    }else{
-      this.WeatherData.isDay = false;
-    }
+    // const date = new Date();
+    // const hora = date.getHours();
+
+    // if(hora >= 6 || hora <= 12){
+    //   this.WeatherData.isDay = true;
+    // }else{
+    //   this.WeatherData.isDay = false;
+    // }
 
     this.WeatherData = data;
     let sunsetTime = new Date(this.WeatherData.sys.sunset * 1000);
     this.WeatherData.sunset_time = sunsetTime.toLocaleTimeString();
-    // let currentDate = new Date();
-    // this.WeatherData.isDay = (currentDate.getTime() < sunsetTime.getTime());
+    let currentDate = new Date();
+    this.WeatherData.isDay = (currentDate.getTime() < sunsetTime.getTime());
     this.WeatherData.temp_celcius = (this.WeatherData.main.temp - 273.15).toFixed(0);
     this.WeatherData.temp_min = (this.WeatherData.main.temp_min - 273.15).toFixed(0);
     this.WeatherData.temp_max = (this.WeatherData.main.temp_max - 273.15).toFixed(0);

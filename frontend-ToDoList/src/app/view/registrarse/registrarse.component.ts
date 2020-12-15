@@ -58,6 +58,12 @@ export class RegistrarseComponent implements OnInit {
                 icon: 'error'
               });
             }
+            if (err.status == 500) {
+              swal.fire({
+                title: 'Problema interno del servidor',
+                icon: 'error'
+              });
+            }
             console.log("Ha ocurrido un error al llamar el servicio ", err);
             this.loading = false;
           },
